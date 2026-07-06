@@ -12,7 +12,7 @@ export type ArtStructure = {
   kilometer: string;
   type: ArtStructureType;
   detail: string;
-  status: "Eksik" | "Devam Ediyor" | "Tamamlandi";
+  status: "Tamamlanmadi" | "Tamamlandi";
   note?: string;
 };
 
@@ -32,7 +32,7 @@ export const artStructures: ArtStructure[] = [
     kilometer: "0+420,00",
     type: "Vantuz",
     detail: "Sade vantuz",
-    status: "Eksik"
+    status: "Tamamlanmadi"
   },
   {
     id: "sy-002",
@@ -41,7 +41,7 @@ export const artStructures: ArtStructure[] = [
     kilometer: "2+180,00",
     type: "Hidrant",
     detail: "Tek cikisli, hat sonu degil, sade",
-    status: "Devam Ediyor"
+    status: "Tamamlanmadi"
   },
   {
     id: "sy-003",
@@ -50,7 +50,7 @@ export const artStructures: ArtStructure[] = [
     kilometer: "5+760,00",
     type: "Tahliye",
     detail: "Cazibeli tahliye",
-    status: "Eksik"
+    status: "Tamamlanmadi"
   },
   {
     id: "sy-004",
@@ -68,7 +68,7 @@ export const artStructures: ArtStructure[] = [
     kilometer: "12+300,00",
     type: "Hat Kapama Vanasi",
     detail: "Ana hat kapama vanasi",
-    status: "Eksik"
+    status: "Tamamlanmadi"
   },
   {
     id: "sy-006",
@@ -77,7 +77,7 @@ export const artStructures: ArtStructure[] = [
     kilometer: "15+520,00",
     type: "Hidrant",
     detail: "Cift cikisli, hat sonu, vantuzlu",
-    status: "Devam Ediyor",
+    status: "Tamamlanmadi",
     note: "15520. metredeki sanat yapisi"
   },
   {
@@ -87,7 +87,7 @@ export const artStructures: ArtStructure[] = [
     kilometer: "18+900,00",
     type: "Tahliye",
     detail: "Pompajli tahliye",
-    status: "Eksik"
+    status: "Tamamlanmadi"
   }
 ];
 
