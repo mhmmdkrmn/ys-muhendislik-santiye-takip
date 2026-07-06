@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { HardHat, LogOut } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Construction, HardHat, LogOut } from "lucide-react";
 import { createSupabaseClient } from "@/lib/supabase";
 
 type Profile = {
@@ -12,7 +13,7 @@ type Profile = {
 
 export default function PanelPage() {
   const router = useRouter();
-  const supabase = createSupabaseClient();
+  const supabase = useMemo(() => createSupabaseClient(), []);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -83,9 +84,23 @@ export default function PanelPage() {
 
       <section className="mx-auto max-w-6xl px-5 py-10">
         <h1 className="text-2xl font-semibold">Panel</h1>
-        <p className="mt-2 text-[#61706b]">
-          Bu alan sonraki adimda santiye takip ekranlari icin duzenlenecek.
-        </p>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Link
+            className="group rounded border border-[#d7d0c4] bg-white p-5 shadow-sm transition hover:border-[#1f4d3a]"
+            href="/panel/sanat-yapilari"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <span className="grid size-11 place-items-center rounded bg-[#eef0ec] text-[#1f4d3a]">
+                <Construction size={22} />
+              </span>
+              <ArrowUpRight className="text-[#61706b] transition group-hover:text-[#1f4d3a]" size={19} />
+            </div>
+            <h2 className="mt-5 text-lg font-semibold">Sanat Yapilari</h2>
+            <p className="mt-2 text-sm leading-6 text-[#61706b]">
+              Hatlara bagli sanat yapilarini kilometre sirasi ve tur filtreleriyle takip et.
+            </p>
+          </Link>
+        </div>
       </section>
     </main>
   );

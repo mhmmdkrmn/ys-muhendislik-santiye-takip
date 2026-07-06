@@ -1,0 +1,111 @@
+export type ArtStructureType =
+  | "Hidrant"
+  | "Vantuz"
+  | "Tahliye"
+  | "Ayrim Yapisi"
+  | "Hat Kapama Vanasi";
+
+export type ArtStructure = {
+  id: string;
+  code: string;
+  line: string;
+  kilometer: string;
+  type: ArtStructureType;
+  detail: string;
+  status: "Eksik" | "Devam Ediyor" | "Tamamlandi";
+  note?: string;
+};
+
+export const artStructureTypes: ArtStructureType[] = [
+  "Hidrant",
+  "Vantuz",
+  "Tahliye",
+  "Ayrim Yapisi",
+  "Hat Kapama Vanasi"
+];
+
+export const artStructures: ArtStructure[] = [
+  {
+    id: "sy-001",
+    code: "SY-001",
+    line: "S1",
+    kilometer: "0+420,00",
+    type: "Vantuz",
+    detail: "Sade vantuz",
+    status: "Eksik"
+  },
+  {
+    id: "sy-002",
+    code: "SY-002",
+    line: "S1",
+    kilometer: "2+180,00",
+    type: "Hidrant",
+    detail: "Tek cikisli, hat sonu degil, sade",
+    status: "Devam Ediyor"
+  },
+  {
+    id: "sy-003",
+    code: "SY-003",
+    line: "S1",
+    kilometer: "5+760,00",
+    type: "Tahliye",
+    detail: "Cazibeli tahliye",
+    status: "Eksik"
+  },
+  {
+    id: "sy-004",
+    code: "SY-004",
+    line: "Yedek-11",
+    kilometer: "8+050,00",
+    type: "Ayrim Yapisi",
+    detail: "Yedek-11 ayrim noktasi",
+    status: "Tamamlandi"
+  },
+  {
+    id: "sy-005",
+    code: "SY-005",
+    line: "S1",
+    kilometer: "12+300,00",
+    type: "Hat Kapama Vanasi",
+    detail: "Ana hat kapama vanasi",
+    status: "Eksik"
+  },
+  {
+    id: "sy-006",
+    code: "SY-006",
+    line: "Yedek-11",
+    kilometer: "15+520,00",
+    type: "Hidrant",
+    detail: "Cift cikisli, hat sonu, vantuzlu",
+    status: "Devam Ediyor",
+    note: "15520. metredeki sanat yapisi"
+  },
+  {
+    id: "sy-007",
+    code: "SY-007",
+    line: "Yedek-11",
+    kilometer: "18+900,00",
+    type: "Tahliye",
+    detail: "Pompajli tahliye",
+    status: "Eksik"
+  }
+];
+
+export function kilometerToMeters(kilometer: string) {
+  const normalized = kilometer.trim().replace(".", "").replace(",", ".");
+  const [kmPart, meterPart = "0"] = normalized.split("+");
+  const kilometers = Number(kmPart);
+  const meters = Number(meterPart);
+
+  if (Number.isNaN(kilometers) || Number.isNaN(meters)) {
+    return Number.MAX_SAFE_INTEGER;
+  }
+
+  return kilometers * 1000 + meters;
+}
+
+export function getArtStructureLines() {
+  return Array.from(new Set(artStructures.map((item) => item.line))).sort((a, b) =>
+    a.localeCompare(b, "tr")
+  );
+}
