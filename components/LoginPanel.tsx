@@ -42,7 +42,7 @@ export function LoginPanel() {
     });
 
     if (error) {
-      setMessage("Giris basarisiz. E-posta veya sifreyi kontrol et.");
+      setMessage("Giris basarisiz. Kullanici adi veya sifreyi kontrol et.");
       setIsLoading(false);
       return;
     }
@@ -57,11 +57,11 @@ export function LoginPanel() {
   return (
     <form className="grid gap-3" onSubmit={handleSubmit}>
       <label className="grid gap-2 text-sm font-medium">
-        E-posta
+        Kullanici adi
         <input
           className="rounded border border-[#c8c0b3] px-3 py-3 text-sm outline-none focus:border-[#1f4d3a]"
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="muhammed@ysmuhendislik.com"
+          placeholder="Kullanici adi"
           type="email"
           value={email}
         />
@@ -71,7 +71,7 @@ export function LoginPanel() {
         <input
           className="rounded border border-[#c8c0b3] px-3 py-3 text-sm outline-none focus:border-[#1f4d3a]"
           onChange={(event) => setPassword(event.target.value)}
-          placeholder="Supabase kullanici sifresi"
+          placeholder="Sifre"
           type="password"
           value={password}
         />
@@ -82,7 +82,7 @@ export function LoginPanel() {
         type="submit"
       >
         <LockKeyhole size={17} />
-        {isLoading ? "Kontrol ediliyor" : "Giris yap"}
+        {isLoading ? "Kontrol ediliyor" : "Giris"}
       </button>
       {message ? <p className="text-sm text-[#9c3d2f]">{message}</p> : null}
     </form>
