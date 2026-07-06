@@ -6,11 +6,11 @@ import {
   FileSpreadsheet,
   Gauge,
   HardHat,
-  LockKeyhole,
   MapPin,
   ShieldCheck,
   UsersRound
 } from "lucide-react";
+import { LoginPanel } from "@/components/LoginPanel";
 
 const roleCards = [
   {
@@ -55,7 +55,7 @@ export default function Home() {
               </div>
             </div>
             <button className="inline-flex size-10 items-center justify-center rounded border border-[#c8c0b3] bg-white text-[#1d2522] shadow-sm">
-              <LockKeyhole size={18} />
+              <ShieldCheck size={18} />
             </button>
           </nav>
 
@@ -114,28 +114,7 @@ export default function Home() {
                 <Gauge className="text-[#b56b34]" size={28} />
               </div>
 
-              <div className="mt-6 grid gap-3">
-                <label className="grid gap-2 text-sm font-medium">
-                  E-posta
-                  <input
-                    className="rounded border border-[#c8c0b3] px-3 py-3 text-sm outline-none focus:border-[#1f4d3a]"
-                    placeholder="admin@ysmuhendislik.com"
-                    type="email"
-                  />
-                </label>
-                <label className="grid gap-2 text-sm font-medium">
-                  Sifre
-                  <input
-                    className="rounded border border-[#c8c0b3] px-3 py-3 text-sm outline-none focus:border-[#1f4d3a]"
-                    placeholder="Supabase baglaninca aktif olacak"
-                    type="password"
-                  />
-                </label>
-                <button className="mt-2 inline-flex items-center justify-center gap-2 rounded bg-[#1f4d3a] px-4 py-3 text-sm font-semibold text-white">
-                  <LockKeyhole size={17} />
-                  Giris yap
-                </button>
-              </div>
+              <LoginPanel />
 
               <div className="mt-6 rounded bg-[#f4f1ea] p-4">
                 <p className="text-sm font-semibold">Bugunku isler</p>
