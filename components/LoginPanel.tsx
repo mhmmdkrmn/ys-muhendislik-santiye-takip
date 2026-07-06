@@ -119,7 +119,7 @@ export function LoginPanel() {
         <input
           className="rounded border border-[#c8c0b3] px-3 py-3 text-sm outline-none focus:border-[#1f4d3a]"
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="admin@ysmuhendislik.com"
+          placeholder="muhammed@ysmuhendislik.com"
           type="email"
           value={email}
         />
