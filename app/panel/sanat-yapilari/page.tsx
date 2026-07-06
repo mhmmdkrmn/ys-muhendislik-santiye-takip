@@ -21,6 +21,7 @@ import {
   X
 } from "lucide-react";
 import { createSupabaseClient } from "@/lib/supabase";
+import { AppUser, getAppUser } from "@/lib/permissions";
 import {
   ArtStructure,
   ArtStructureType,
@@ -31,7 +32,6 @@ import {
 
 type Profile = {
   full_name: string;
-  role: "admin" | "saha";
 };
 
 type FormState = Omit<ArtStructure, "id">;
@@ -85,7 +85,7 @@ function downloadCsv(items: ArtStructure[]) {
 export default function ArtStructuresPage() {
   const router = useRouter();
   const supabase = useMemo(() => createSupabaseClient(), []);
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [user, setUser] = useState<AppUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState<ArtStructure[]>(artStructures);
   const [typeFilter, setTypeFilter] = useState("Tum Turler");
@@ -162,11 +162,11 @@ export default function ArtStructuresPage() {
 
       const { data: profileData } = await supabase
         .from("profiles")
-        .select("full_name, role")
+        .select("full_name")
         .eq("id", data.user.id)
         .single();
 
-      setProfile(profileData);
+      setUser(getAppUser(data.user.email, profileData?.full_name));
       setIsLoading(false);
     });
   }, [router, supabase]);
@@ -185,6 +185,8 @@ export default function ArtStructuresPage() {
   }
 
   function openCreateForm() {
+    if (!user?.canEdit) return;
+
     setForm({
       ...emptyForm,
       code: `SY-${String(items.length + 1).padStart(3, "0")}`
@@ -194,6 +196,8 @@ export default function ArtStructuresPage() {
   }
 
   function openEditForm(item: ArtStructure) {
+    if (!user?.canEdit) return;
+
     setForm({
       code: item.code,
       line: item.line,
@@ -209,6 +213,7 @@ export default function ArtStructuresPage() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!user?.canEdit) return;
 
     if (editingId) {
       setItems((currentItems) =>
@@ -229,6 +234,8 @@ export default function ArtStructuresPage() {
   }
 
   function deleteItem(itemId: string) {
+    if (!user?.canEdit) return;
+
     const shouldDelete = window.confirm("Bu sanat yapisi silinsin mi?");
     if (!shouldDelete) return;
 
@@ -258,8 +265,7 @@ export default function ArtStructuresPage() {
             <div>
               <p className="font-semibold">YS Muhendislik Santiye Takip</p>
               <p className="text-sm text-[#61706b]">
-                {profile?.full_name ?? "Kullanici"} -{" "}
-                {profile?.role === "admin" ? "Yonetici" : "Saha Kullanici"}
+                {user?.name ?? "Kullanici"} - {user?.title ?? "Goruntuleme"}
               </p>
             </div>
           </div>
@@ -295,14 +301,16 @@ export default function ArtStructuresPage() {
           </div>
 
           <div className="flex flex-wrap gap-2 print:hidden">
-            <button
-              className="inline-flex items-center gap-2 rounded bg-[#1f4d3a] px-4 py-2 text-sm font-semibold text-white"
-              onClick={openCreateForm}
-              type="button"
-            >
-              <Plus size={16} />
-              Yeni Kayit
-            </button>
+            {user?.canEdit ? (
+              <button
+                className="inline-flex items-center gap-2 rounded bg-[#1f4d3a] px-4 py-2 text-sm font-semibold text-white"
+                onClick={openCreateForm}
+                type="button"
+              >
+                <Plus size={16} />
+                Yeni Kayit
+              </button>
+            ) : null}
             <button
               className="inline-flex items-center gap-2 rounded border border-[#c8c0b3] bg-white px-4 py-2 text-sm font-semibold"
               onClick={() => downloadCsv(filteredStructures)}
@@ -337,7 +345,7 @@ export default function ArtStructuresPage() {
           </div>
         </div>
 
-        {isFormOpen ? (
+        {isFormOpen && user?.canEdit ? (
           <form
             className="mt-5 grid gap-4 rounded border border-[#d7d0c4] bg-white p-4 print:hidden"
             onSubmit={handleSubmit}
@@ -531,19 +539,29 @@ export default function ArtStructuresPage() {
         </div>
 
         <div className="mt-5 overflow-hidden rounded border border-[#d7d0c4] bg-white">
-          <div className="grid grid-cols-[90px_110px_1fr_120px_140px_120px] gap-4 border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3 text-sm font-semibold text-[#33413c] max-lg:hidden">
+          <div
+            className={
+              user?.canEdit
+                ? "grid grid-cols-[90px_110px_1fr_120px_140px_120px] gap-4 border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3 text-sm font-semibold text-[#33413c] max-lg:hidden"
+                : "grid grid-cols-[90px_110px_1fr_120px_140px] gap-4 border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3 text-sm font-semibold text-[#33413c] max-lg:hidden"
+            }
+          >
             <span>Km</span>
             <span>Hat</span>
             <span>Sanat yapisi</span>
             <span>Tur</span>
             <span>Durum</span>
-            <span className="print:hidden">Islem</span>
+            {user?.canEdit ? <span className="print:hidden">Islem</span> : null}
           </div>
 
           <div className="divide-y divide-[#e4ded4]">
             {filteredStructures.map((item) => (
               <article
-                className="grid gap-3 px-4 py-4 lg:grid-cols-[90px_110px_1fr_120px_140px_120px] lg:items-center"
+                className={
+                  user?.canEdit
+                    ? "grid gap-3 px-4 py-4 lg:grid-cols-[90px_110px_1fr_120px_140px_120px] lg:items-center"
+                    : "grid gap-3 px-4 py-4 lg:grid-cols-[90px_110px_1fr_120px_140px] lg:items-center"
+                }
                 key={item.id}
               >
                 <div className="flex items-center gap-2 font-semibold text-[#1f4d3a]">
@@ -574,24 +592,26 @@ export default function ArtStructuresPage() {
                     {item.status}
                   </span>
                 </div>
-                <div className="flex gap-2 print:hidden">
-                  <button
-                    className="inline-flex size-9 items-center justify-center rounded border border-[#c8c0b3] bg-white"
-                    onClick={() => openEditForm(item)}
-                    title="Duzenle"
-                    type="button"
-                  >
-                    <Pencil size={16} />
-                  </button>
-                  <button
-                    className="inline-flex size-9 items-center justify-center rounded border border-[#d8b6ad] bg-white text-[#9c3d2f]"
-                    onClick={() => deleteItem(item.id)}
-                    title="Sil"
-                    type="button"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
+                {user?.canEdit ? (
+                  <div className="flex gap-2 print:hidden">
+                    <button
+                      className="inline-flex size-9 items-center justify-center rounded border border-[#c8c0b3] bg-white"
+                      onClick={() => openEditForm(item)}
+                      title="Duzenle"
+                      type="button"
+                    >
+                      <Pencil size={16} />
+                    </button>
+                    <button
+                      className="inline-flex size-9 items-center justify-center rounded border border-[#d8b6ad] bg-white text-[#9c3d2f]"
+                      onClick={() => deleteItem(item.id)}
+                      title="Sil"
+                      type="button"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                ) : null}
               </article>
             ))}
           </div>

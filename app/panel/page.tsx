@@ -5,16 +5,16 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowUpRight, Construction, HardHat, LogOut } from "lucide-react";
 import { createSupabaseClient } from "@/lib/supabase";
+import { AppUser, getAppUser } from "@/lib/permissions";
 
 type Profile = {
   full_name: string;
-  role: "admin" | "saha";
 };
 
 export default function PanelPage() {
   const router = useRouter();
   const supabase = useMemo(() => createSupabaseClient(), []);
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [user, setUser] = useState<AppUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -31,11 +31,11 @@ export default function PanelPage() {
 
       const { data: profileData } = await supabase
         .from("profiles")
-        .select("full_name, role")
+        .select("full_name")
         .eq("id", data.user.id)
         .single();
 
-      setProfile(profileData);
+      setUser(getAppUser(data.user.email, profileData?.full_name));
       setIsLoading(false);
     });
   }, [router, supabase]);
@@ -66,8 +66,7 @@ export default function PanelPage() {
             <div>
               <p className="font-semibold">YS Muhendislik Santiye Takip</p>
               <p className="text-sm text-[#61706b]">
-                {profile?.full_name ?? "Kullanici"} -{" "}
-                {profile?.role === "admin" ? "Yonetici" : "Saha Kullanici"}
+                {user?.name ?? "Kullanici"} - {user?.title ?? "Goruntuleme"}
               </p>
             </div>
           </div>
