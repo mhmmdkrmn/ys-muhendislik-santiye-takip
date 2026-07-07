@@ -40,6 +40,30 @@ type Profile = {
 };
 
 type FormState = Omit<ArtStructure, "id">;
+type ReportFieldKey =
+  | "code"
+  | "line"
+  | "kilometer"
+  | "meter"
+  | "type"
+  | "detail"
+  | "concreteSize"
+  | "coverSize"
+  | "valveInstalled"
+  | "mechanicalInstalled"
+  | "steelPipeInstalled"
+  | "flangeInstalled"
+  | "coverInstalled"
+  | "needsRevision"
+  | "revisionNote"
+  | "status"
+  | "note";
+
+type ReportField = {
+  key: ReportFieldKey;
+  label: string;
+  getValue: (item: ArtStructure) => string;
+};
 
 const emptyForm: FormState = {
   code: "",
@@ -60,49 +84,56 @@ const emptyForm: FormState = {
   note: ""
 };
 
+const reportFields: ReportField[] = [
+  { key: "code", label: "No", getValue: (item) => item.code },
+  { key: "line", label: "Hat", getValue: (item) => item.line },
+  { key: "kilometer", label: "Kilometre", getValue: (item) => item.kilometer },
+  {
+    key: "meter",
+    label: "Metre",
+    getValue: (item) => kilometerToMeters(item.kilometer).toLocaleString("tr-TR")
+  },
+  { key: "type", label: "Tur", getValue: (item) => item.type },
+  { key: "detail", label: "Ozellik", getValue: (item) => item.detail },
+  { key: "concreteSize", label: "Betonarme Olcusu", getValue: (item) => item.concreteSize ?? "" },
+  { key: "coverSize", label: "Kapak Olcusu", getValue: (item) => item.coverSize ?? "" },
+  { key: "valveInstalled", label: "Vana", getValue: (item) => (item.valveInstalled ? "Evet" : "Hayir") },
+  {
+    key: "mechanicalInstalled",
+    label: "Mekanik Parca",
+    getValue: (item) => (item.mechanicalInstalled ? "Evet" : "Hayir")
+  },
+  {
+    key: "steelPipeInstalled",
+    label: "Celik Boru",
+    getValue: (item) => (item.steelPipeInstalled ? "Evet" : "Hayir")
+  },
+  { key: "flangeInstalled", label: "Flans", getValue: (item) => (item.flangeInstalled ? "Evet" : "Hayir") },
+  { key: "coverInstalled", label: "Kapak", getValue: (item) => (item.coverInstalled ? "Evet" : "Hayir") },
+  { key: "needsRevision", label: "Duzeltme", getValue: (item) => (item.needsRevision ? "Evet" : "Hayir") },
+  { key: "revisionNote", label: "Duzeltme Notu", getValue: (item) => item.revisionNote ?? "" },
+  { key: "status", label: "Durum", getValue: (item) => item.status },
+  { key: "note", label: "Not", getValue: (item) => item.note ?? "" }
+];
+
+const defaultReportFieldKeys: ReportFieldKey[] = [
+  "code",
+  "line",
+  "kilometer",
+  "type",
+  "detail",
+  "status",
+  "revisionNote",
+  "note"
+];
+
 function normalizeText(value: string) {
   return value.toLocaleLowerCase("tr-TR").trim();
 }
 
-function downloadCsv(items: ArtStructure[]) {
-  const headers = [
-    "No",
-    "Hat",
-    "Kilometre",
-    "Metre",
-    "Tur",
-    "Ozellik",
-    "Betonarme Olcusu",
-    "Kapak Olcusu",
-    "Vana",
-    "Mekanik Parca",
-    "Celik Boru",
-    "Flans",
-    "Kapak",
-    "Duzeltme",
-    "Duzeltme Notu",
-    "Durum",
-    "Not"
-  ];
-  const rows = items.map((item) => [
-    item.code,
-    item.line,
-    item.kilometer,
-    kilometerToMeters(item.kilometer).toLocaleString("tr-TR"),
-    item.type,
-    item.detail,
-    item.concreteSize ?? "",
-    item.coverSize ?? "",
-    item.valveInstalled ? "Evet" : "Hayir",
-    item.mechanicalInstalled ? "Evet" : "Hayir",
-    item.steelPipeInstalled ? "Evet" : "Hayir",
-    item.flangeInstalled ? "Evet" : "Hayir",
-    item.coverInstalled ? "Evet" : "Hayir",
-    item.needsRevision ? "Evet" : "Hayir",
-    item.revisionNote ?? "",
-    item.status,
-    item.note ?? ""
-  ]);
+function downloadCsv(items: ArtStructure[], selectedFields: ReportField[]) {
+  const headers = selectedFields.map((field) => field.label);
+  const rows = items.map((item) => selectedFields.map((field) => field.getValue(item)));
 
   const csv = [headers, ...rows]
     .map((row) =>
@@ -139,6 +170,8 @@ export default function ArtStructuresPage() {
   const [form, setForm] = useState<FormState>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedReportFields, setSelectedReportFields] =
+    useState<ReportFieldKey[]>(defaultReportFieldKeys);
 
   const lines = useMemo(() => {
     return lineOptions;
@@ -187,6 +220,10 @@ export default function ArtStructuresPage() {
       incomplete: items.length - completed
     };
   }, [items]);
+
+  const selectedFields = useMemo(() => {
+    return reportFields.filter((field) => selectedReportFields.includes(field.key));
+  }, [selectedReportFields]);
 
   useEffect(() => {
     const savedLines = window.localStorage.getItem(linesStorageKey);
@@ -352,6 +389,17 @@ export default function ArtStructuresPage() {
     setForm((currentForm) => ({ ...currentForm, [key]: value }));
   }
 
+  function toggleReportField(fieldKey: ReportFieldKey) {
+    setSelectedReportFields((currentFields) => {
+      if (currentFields.includes(fieldKey)) {
+        const nextFields = currentFields.filter((key) => key !== fieldKey);
+        return nextFields.length > 0 ? nextFields : currentFields;
+      }
+
+      return [...currentFields, fieldKey];
+    });
+  }
+
   if (isLoading) {
     return (
       <main className="grid min-h-screen place-items-center bg-[#f4f1ea] text-[#1d2522]">
@@ -419,7 +467,7 @@ export default function ArtStructuresPage() {
             ) : null}
             <button
               className="inline-flex items-center gap-2 rounded border border-[#c8c0b3] bg-white px-4 py-2 text-sm font-semibold"
-              onClick={() => downloadCsv(filteredStructures)}
+              onClick={() => downloadCsv(filteredStructures, selectedFields)}
               type="button"
             >
               <Download size={16} />
@@ -757,7 +805,46 @@ export default function ArtStructuresPage() {
           </div>
         </div>
 
-        <div className="mt-5 overflow-hidden rounded border border-[#d7d0c4] bg-white">
+        <div className="mt-5 rounded border border-[#d7d0c4] bg-white p-4 print:hidden">
+          <div className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
+            <div>
+              <h2 className="font-semibold">Rapor alanlari</h2>
+              <p className="mt-1 text-sm text-[#61706b]">
+                Excel ve PDF raporuna girecek kolonlari sec.
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                className="rounded border border-[#c8c0b3] bg-white px-3 py-2 text-sm font-semibold"
+                onClick={() => setSelectedReportFields(reportFields.map((field) => field.key))}
+                type="button"
+              >
+                Hepsi
+              </button>
+              <button
+                className="rounded border border-[#c8c0b3] bg-white px-3 py-2 text-sm font-semibold"
+                onClick={() => setSelectedReportFields(defaultReportFieldKeys)}
+                type="button"
+              >
+                Varsayilan
+              </button>
+            </div>
+          </div>
+          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {reportFields.map((field) => (
+              <label className="flex items-center gap-2 text-sm" key={field.key}>
+                <input
+                  checked={selectedReportFields.includes(field.key)}
+                  onChange={() => toggleReportField(field.key)}
+                  type="checkbox"
+                />
+                {field.label}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-5 overflow-hidden rounded border border-[#d7d0c4] bg-white print:hidden">
           <div
             className={
               user?.canEdit
@@ -855,6 +942,31 @@ export default function ArtStructuresPage() {
               Filtrelere uygun sanat yapisi bulunamadi.
             </div>
           ) : null}
+        </div>
+
+        <div className="hidden print:block">
+          <table className="w-full border-collapse text-xs">
+            <thead>
+              <tr>
+                {selectedFields.map((field) => (
+                  <th className="border border-[#777] px-2 py-1 text-left" key={field.key}>
+                    {field.label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {filteredStructures.map((item) => (
+                <tr key={item.id}>
+                  {selectedFields.map((field) => (
+                    <td className="border border-[#999] px-2 py-1" key={field.key}>
+                      {field.getValue(item)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
     </main>
