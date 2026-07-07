@@ -13,10 +13,20 @@ export type ArtStructure = {
   type: ArtStructureType;
   detail: string;
   status: "Tamamlanmadi" | "Tamamlandi";
+  concreteSize?: string;
+  coverSize?: string;
+  valveInstalled?: boolean;
+  mechanicalInstalled?: boolean;
+  steelPipeInstalled?: boolean;
+  flangeInstalled?: boolean;
+  coverInstalled?: boolean;
+  needsRevision?: boolean;
+  revisionNote?: string;
   note?: string;
 };
 
 export const artStructuresStorageKey = "ys-art-structures-v1";
+export const artStructurePresetsStorageKey = "ys-art-structure-presets-v1";
 
 export const artStructureTypes: ArtStructureType[] = [
   "Hidrant",
@@ -24,6 +34,22 @@ export const artStructureTypes: ArtStructureType[] = [
   "Tahliye",
   "Ayrim Yapisi",
   "Hat Kapama Vanasi"
+];
+
+export const defaultArtStructurePresets = [
+  "Tek cikisli, hat sonu degil, sade",
+  "Tek cikisli, hat sonu, sade",
+  "Tek cikisli, hat sonu degil, vantuzlu",
+  "Tek cikisli, hat sonu, vantuzlu",
+  "Cift cikisli, hat sonu degil, sade",
+  "Cift cikisli, hat sonu, sade",
+  "Cift cikisli, hat sonu degil, vantuzlu",
+  "Cift cikisli, hat sonu, vantuzlu",
+  "Sade vantuz",
+  "Cazibeli tahliye",
+  "Pompajli tahliye",
+  "Ayrim yapisi",
+  "Hat kapama vanasi"
 ];
 
 export const artStructures: ArtStructure[] = [

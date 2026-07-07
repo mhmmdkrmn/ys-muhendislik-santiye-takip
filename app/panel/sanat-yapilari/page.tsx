@@ -26,8 +26,10 @@ import {
   ArtStructure,
   ArtStructureType,
   artStructures,
+  artStructurePresetsStorageKey,
   artStructuresStorageKey,
   artStructureTypes,
+  defaultArtStructurePresets,
   kilometerToMeters,
   sortArtStructuresByLineAndKm
 } from "@/lib/art-structures";
@@ -46,6 +48,15 @@ const emptyForm: FormState = {
   type: "Hidrant",
   detail: "",
   status: "Tamamlanmadi",
+  concreteSize: "",
+  coverSize: "",
+  valveInstalled: false,
+  mechanicalInstalled: false,
+  steelPipeInstalled: false,
+  flangeInstalled: false,
+  coverInstalled: false,
+  needsRevision: false,
+  revisionNote: "",
   note: ""
 };
 
@@ -54,7 +65,25 @@ function normalizeText(value: string) {
 }
 
 function downloadCsv(items: ArtStructure[]) {
-  const headers = ["No", "Hat", "Kilometre", "Metre", "Tur", "Ozellik", "Durum", "Not"];
+  const headers = [
+    "No",
+    "Hat",
+    "Kilometre",
+    "Metre",
+    "Tur",
+    "Ozellik",
+    "Betonarme Olcusu",
+    "Kapak Olcusu",
+    "Vana",
+    "Mekanik Parca",
+    "Celik Boru",
+    "Flans",
+    "Kapak",
+    "Duzeltme",
+    "Duzeltme Notu",
+    "Durum",
+    "Not"
+  ];
   const rows = items.map((item) => [
     item.code,
     item.line,
@@ -62,6 +91,15 @@ function downloadCsv(items: ArtStructure[]) {
     kilometerToMeters(item.kilometer).toLocaleString("tr-TR"),
     item.type,
     item.detail,
+    item.concreteSize ?? "",
+    item.coverSize ?? "",
+    item.valveInstalled ? "Evet" : "Hayir",
+    item.mechanicalInstalled ? "Evet" : "Hayir",
+    item.steelPipeInstalled ? "Evet" : "Hayir",
+    item.flangeInstalled ? "Evet" : "Hayir",
+    item.coverInstalled ? "Evet" : "Hayir",
+    item.needsRevision ? "Evet" : "Hayir",
+    item.revisionNote ?? "",
     item.status,
     item.note ?? ""
   ]);
@@ -89,6 +127,8 @@ export default function ArtStructuresPage() {
   const [user, setUser] = useState<AppUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState<ArtStructure[]>(artStructures);
+  const [presets, setPresets] = useState(defaultArtStructurePresets);
+  const [newPreset, setNewPreset] = useState("");
   const [lineOptions, setLineOptions] = useState(defaultLines.map((line) => line.name));
   const [typeFilter, setTypeFilter] = useState("Tum Turler");
   const [lineFilter, setLineFilter] = useState("Tum Hatlar");
@@ -115,7 +155,17 @@ export default function ArtStructuresPage() {
       .filter((item) => statusFilter === "Tum Durumlar" || item.status === statusFilter)
       .filter((item) => {
         if (!query) return true;
-        return [item.code, item.line, item.kilometer, item.type, item.detail, item.note ?? ""]
+        return [
+          item.code,
+          item.line,
+          item.kilometer,
+          item.type,
+          item.detail,
+          item.concreteSize ?? "",
+          item.coverSize ?? "",
+          item.revisionNote ?? "",
+          item.note ?? ""
+        ]
           .map(normalizeText)
           .some((value) => value.includes(query));
       })
@@ -155,11 +205,20 @@ export default function ArtStructuresPage() {
     if (savedItems) {
       setItems(JSON.parse(savedItems));
     }
+
+    const savedPresets = window.localStorage.getItem(artStructurePresetsStorageKey);
+    if (savedPresets) {
+      setPresets(JSON.parse(savedPresets));
+    }
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem(artStructuresStorageKey, JSON.stringify(items));
   }, [items]);
+
+  useEffect(() => {
+    window.localStorage.setItem(artStructurePresetsStorageKey, JSON.stringify(presets));
+  }, [presets]);
 
   useEffect(() => {
     if (!supabase) {
@@ -219,6 +278,15 @@ export default function ArtStructuresPage() {
       type: item.type,
       detail: item.detail,
       status: item.status,
+      concreteSize: item.concreteSize ?? "",
+      coverSize: item.coverSize ?? "",
+      valveInstalled: item.valveInstalled ?? false,
+      mechanicalInstalled: item.mechanicalInstalled ?? false,
+      steelPipeInstalled: item.steelPipeInstalled ?? false,
+      flangeInstalled: item.flangeInstalled ?? false,
+      coverInstalled: item.coverInstalled ?? false,
+      needsRevision: item.needsRevision ?? false,
+      revisionNote: item.revisionNote ?? "",
       note: item.note ?? ""
     });
     setEditingId(item.id);
@@ -229,9 +297,22 @@ export default function ArtStructuresPage() {
     event.preventDefault();
     if (!user?.canEdit) return;
 
+    const isComplete =
+      Boolean(form.valveInstalled) &&
+      Boolean(form.mechanicalInstalled) &&
+      Boolean(form.steelPipeInstalled) &&
+      Boolean(form.flangeInstalled) &&
+      Boolean(form.coverInstalled) &&
+      !form.needsRevision;
+
+    const nextForm = {
+      ...form,
+      status: isComplete ? ("Tamamlandi" as const) : ("Tamamlanmadi" as const)
+    };
+
     if (editingId) {
       setItems((currentItems) =>
-        currentItems.map((item) => (item.id === editingId ? { ...item, ...form } : item))
+        currentItems.map((item) => (item.id === editingId ? { ...item, ...nextForm } : item))
       );
       resetForm();
       return;
@@ -241,10 +322,21 @@ export default function ArtStructuresPage() {
       ...currentItems,
       {
         id: crypto.randomUUID(),
-        ...form
+        ...nextForm
       }
     ]);
     resetForm();
+  }
+
+  function addPreset() {
+    const cleanPreset = newPreset.trim();
+    if (!cleanPreset) return;
+
+    setPresets((currentPresets) =>
+      currentPresets.includes(cleanPreset) ? currentPresets : [...currentPresets, cleanPreset].sort()
+    );
+    setForm((currentForm) => ({ ...currentForm, detail: cleanPreset }));
+    setNewPreset("");
   }
 
   function deleteItem(itemId: string) {
@@ -448,29 +540,111 @@ export default function ArtStructuresPage() {
 
             <div className="grid gap-3 md:grid-cols-[1fr_220px]">
               <label className="grid gap-2 text-sm font-medium">
-                Ozellik
-                <input
-                  className="rounded border border-[#c8c0b3] px-3 py-2 outline-none focus:border-[#1f4d3a]"
+                Ozellik on tanimi
+                <select
+                  className="rounded border border-[#c8c0b3] bg-white px-3 py-2 outline-none focus:border-[#1f4d3a]"
                   onChange={(event) => updateForm("detail", event.target.value)}
-                  placeholder="Cift cikisli, hat sonu, vantuzlu"
                   required
                   value={form.detail}
-                />
+                >
+                  <option value="">Sec</option>
+                  {presets.map((preset) => (
+                    <option key={preset}>{preset}</option>
+                  ))}
+                </select>
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 Durum
-                <select
-                  className="rounded border border-[#c8c0b3] bg-white px-3 py-2 outline-none focus:border-[#1f4d3a]"
-                  onChange={(event) =>
-                    updateForm("status", event.target.value as ArtStructure["status"])
+                <input
+                  className="rounded border border-[#c8c0b3] bg-[#f4f1ea] px-3 py-2 text-[#61706b]"
+                  readOnly
+                  value={
+                    form.valveInstalled &&
+                    form.mechanicalInstalled &&
+                    form.steelPipeInstalled &&
+                    form.flangeInstalled &&
+                    form.coverInstalled &&
+                    !form.needsRevision
+                      ? "Tamamlandi"
+                      : "Tamamlanmadi"
                   }
-                  value={form.status}
-                >
-                  <option>Tamamlanmadi</option>
-                  <option>Tamamlandi</option>
-                </select>
+                />
               </label>
             </div>
+
+            <div className="grid gap-3 md:grid-cols-[1fr_auto]">
+              <label className="grid gap-2 text-sm font-medium">
+                Yeni on tanim
+                <input
+                  className="rounded border border-[#c8c0b3] px-3 py-2 outline-none focus:border-[#1f4d3a]"
+                  onChange={(event) => setNewPreset(event.target.value)}
+                  placeholder="Orn. Cift cikisli, vantuzlu, hat sonu degil"
+                  value={newPreset}
+                />
+              </label>
+              <button
+                className="self-end rounded border border-[#c8c0b3] bg-white px-4 py-2 text-sm font-semibold"
+                onClick={addPreset}
+                type="button"
+              >
+                On Tanim Ekle
+              </button>
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-2">
+              <label className="grid gap-2 text-sm font-medium">
+                Betonarme olcusu
+                <input
+                  className="rounded border border-[#c8c0b3] px-3 py-2 outline-none focus:border-[#1f4d3a]"
+                  onChange={(event) => updateForm("concreteSize", event.target.value)}
+                  placeholder="Orn. 2.00 x 2.00 x 2.20"
+                  value={form.concreteSize}
+                />
+              </label>
+              <label className="grid gap-2 text-sm font-medium">
+                Kapak olcusu
+                <input
+                  className="rounded border border-[#c8c0b3] px-3 py-2 outline-none focus:border-[#1f4d3a]"
+                  onChange={(event) => updateForm("coverSize", event.target.value)}
+                  placeholder="Orn. 60 x 60"
+                  value={form.coverSize}
+                />
+              </label>
+            </div>
+
+            <div className="grid gap-3 rounded border border-[#d7d0c4] bg-[#f8f6f1] p-3 md:grid-cols-3">
+              {[
+                ["valveInstalled", "Vana takili mi"],
+                ["mechanicalInstalled", "Mekanik parca takili mi"],
+                ["steelPipeInstalled", "Celik boru takili mi"],
+                ["flangeInstalled", "Flans takili mi"],
+                ["coverInstalled", "Kapak takili mi"],
+                ["needsRevision", "Duzeltme gerekli mi"]
+              ].map(([key, label]) => (
+                <label className="flex items-center gap-2 text-sm font-medium" key={key}>
+                  <input
+                    checked={Boolean(form[key as keyof FormState])}
+                    onChange={(event) =>
+                      updateForm(key as keyof FormState, event.target.checked as never)
+                    }
+                    type="checkbox"
+                  />
+                  {label}
+                </label>
+              ))}
+            </div>
+
+            {form.needsRevision ? (
+              <label className="grid gap-2 text-sm font-medium">
+                Duzeltme notu
+                <input
+                  className="rounded border border-[#c8c0b3] px-3 py-2 outline-none focus:border-[#1f4d3a]"
+                  onChange={(event) => updateForm("revisionNote", event.target.value)}
+                  placeholder="Orn. Temizlik gerekli"
+                  value={form.revisionNote}
+                />
+              </label>
+            ) : null}
 
             <label className="grid gap-2 text-sm font-medium">
               Not
@@ -619,6 +793,21 @@ export default function ArtStructuresPage() {
                     <h2 className="font-semibold">{item.code}</h2>
                   </div>
                   <p className="mt-1 text-sm text-[#61706b]">{item.detail}</p>
+                  <p className="mt-1 text-xs text-[#61706b]">
+                    Betonarme: {item.concreteSize || "-"} | Kapak: {item.coverSize || "-"}
+                  </p>
+                  <p className="mt-1 text-xs text-[#61706b]">
+                    Vana {item.valveInstalled ? "ok" : "eksik"} | Mekanik{" "}
+                    {item.mechanicalInstalled ? "ok" : "eksik"} | Celik boru{" "}
+                    {item.steelPipeInstalled ? "ok" : "eksik"} | Flans{" "}
+                    {item.flangeInstalled ? "ok" : "eksik"} | Kapak{" "}
+                    {item.coverInstalled ? "ok" : "eksik"}
+                  </p>
+                  {item.needsRevision ? (
+                    <p className="mt-1 text-xs font-semibold text-[#9c3d2f]">
+                      Duzeltme: {item.revisionNote || "Not girilmedi"}
+                    </p>
+                  ) : null}
                   {item.note ? <p className="mt-1 text-xs text-[#8a6a48]">{item.note}</p> : null}
                 </div>
                 <div>
