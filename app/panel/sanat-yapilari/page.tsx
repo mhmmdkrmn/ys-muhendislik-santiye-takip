@@ -25,15 +25,21 @@ import { AppUser, getAppUser } from "@/lib/permissions";
 import {
   ArtStructure,
   ArtStructureType,
-  artStructures,
-  artStructurePresetsStorageKey,
-  artStructuresStorageKey,
   artStructureTypes,
   defaultArtStructurePresets,
   kilometerToMeters,
   sortArtStructuresByLineAndKm
 } from "@/lib/art-structures";
-import { defaultLines, linesStorageKey, mergeRequiredS1Lines, sortLines } from "@/lib/lines";
+import { defaultLines, sortLines } from "@/lib/lines";
+import {
+  createArtStructure,
+  createPreset,
+  deleteArtStructureById,
+  fetchArtStructures,
+  fetchLines,
+  fetchPresets,
+  updateArtStructure
+} from "@/lib/supabase-data";
 
 type Profile = {
   full_name: string;
@@ -167,7 +173,7 @@ export default function ArtStructuresPage() {
   const supabase = useMemo(() => createSupabaseClient(), []);
   const [user, setUser] = useState<AppUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [items, setItems] = useState<ArtStructure[]>(artStructures);
+  const [items, setItems] = useState<ArtStructure[]>([]);
   const [presets, setPresets] = useState(defaultArtStructurePresets);
   const [newPreset, setNewPreset] = useState("");
   const [lineOptions, setLineOptions] = useState(defaultLines.map((line) => line.name));
@@ -248,38 +254,6 @@ export default function ArtStructuresPage() {
   }, [form.detail, form.type]);
 
   useEffect(() => {
-    const savedLines = window.localStorage.getItem(linesStorageKey);
-    if (savedLines) {
-      const parsedLines = mergeRequiredS1Lines(JSON.parse(savedLines));
-      window.localStorage.setItem(linesStorageKey, JSON.stringify(parsedLines));
-      setLineOptions(sortLines(parsedLines).map((line) => line.name));
-    }
-
-    const hatParam = new URLSearchParams(window.location.search).get("hat");
-    if (hatParam) {
-      setLineFilter(hatParam);
-    }
-
-    const savedItems = window.localStorage.getItem(artStructuresStorageKey);
-    if (savedItems) {
-      setItems(JSON.parse(savedItems));
-    }
-
-    const savedPresets = window.localStorage.getItem(artStructurePresetsStorageKey);
-    if (savedPresets) {
-      setPresets(JSON.parse(savedPresets));
-    }
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem(artStructuresStorageKey, JSON.stringify(items));
-  }, [items]);
-
-  useEffect(() => {
-    window.localStorage.setItem(artStructurePresetsStorageKey, JSON.stringify(presets));
-  }, [presets]);
-
-  useEffect(() => {
     if (!supabase) {
       router.replace("/");
       return;
@@ -298,6 +272,19 @@ export default function ArtStructuresPage() {
         .single();
 
       setUser(getAppUser(data.user.email, profileData?.full_name));
+      const [lineData, structureData, presetData] = await Promise.all([
+        fetchLines(supabase),
+        fetchArtStructures(supabase),
+        fetchPresets(supabase)
+      ]);
+
+      const nextLineOptions = sortLines(lineData).map((line) => line.name);
+      const hatParam = new URLSearchParams(window.location.search).get("hat");
+
+      setLineOptions(nextLineOptions);
+      setLineFilter(hatParam || "Tum Hatlar");
+      setItems(structureData);
+      setPresets(presetData.length > 0 ? presetData : defaultArtStructurePresets);
       setIsLoading(false);
     });
   }, [router, supabase]);
@@ -354,9 +341,9 @@ export default function ArtStructuresPage() {
     setIsFormOpen(true);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!user?.canEdit) return;
+    if (!user?.canEdit || !supabase) return;
 
     const isComplete =
       Boolean(form.valveInstalled) &&
@@ -372,27 +359,26 @@ export default function ArtStructuresPage() {
     };
 
     if (editingId) {
+      const updatedItem = await updateArtStructure(supabase, editingId, nextForm);
       setItems((currentItems) =>
-        currentItems.map((item) => (item.id === editingId ? { ...item, ...nextForm } : item))
+        currentItems.map((item) => (item.id === editingId ? updatedItem : item))
       );
       resetForm();
       return;
     }
 
-    setItems((currentItems) => [
-      ...currentItems,
-      {
-        id: crypto.randomUUID(),
-        ...nextForm
-      }
-    ]);
+    const createdItem = await createArtStructure(supabase, nextForm);
+    setItems((currentItems) => [...currentItems, createdItem]);
     resetForm();
   }
 
-  function addPreset() {
+  async function addPreset() {
     const cleanPreset = newPreset.trim();
-    if (!cleanPreset) return;
+    if (!cleanPreset || !supabase) return;
 
+    if (user?.canEdit) {
+      await createPreset(supabase, cleanPreset);
+    }
     setPresets((currentPresets) =>
       currentPresets.includes(cleanPreset) ? currentPresets : [...currentPresets, cleanPreset].sort()
     );
@@ -400,12 +386,13 @@ export default function ArtStructuresPage() {
     setNewPreset("");
   }
 
-  function deleteItem(itemId: string) {
-    if (!user?.canEdit) return;
+  async function deleteItem(itemId: string) {
+    if (!user?.canEdit || !supabase) return;
 
     const shouldDelete = window.confirm("Bu sanat yapisi silinsin mi?");
     if (!shouldDelete) return;
 
+    await deleteArtStructureById(supabase, itemId);
     setItems((currentItems) => currentItems.filter((item) => item.id !== itemId));
   }
 

@@ -19,18 +19,22 @@ import { createSupabaseClient } from "@/lib/supabase";
 import { AppUser, getAppUser } from "@/lib/permissions";
 import {
   ArtStructure,
-  artStructures,
-  artStructuresStorageKey,
   sortArtStructuresByLineAndKm
 } from "@/lib/art-structures";
 import {
   PipelineLine,
   buildLineName,
   defaultLines,
-  linesStorageKey,
-  mergeRequiredS1Lines,
   sortLines
 } from "@/lib/lines";
+import {
+  createLine,
+  deleteLineById,
+  fetchArtStructures,
+  fetchLines,
+  updateArtStructureLineName,
+  updateLine
+} from "@/lib/supabase-data";
 
 type Profile = {
   full_name: string;
@@ -50,7 +54,7 @@ export default function LinesPage() {
   const [user, setUser] = useState<AppUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [lines, setLines] = useState<PipelineLine[]>(defaultLines);
-  const [structures, setStructures] = useState<ArtStructure[]>(artStructures);
+  const [structures, setStructures] = useState<ArtStructure[]>([]);
   const [selectedLine, setSelectedLine] = useState(defaultLines[0]?.name ?? "");
   const [form, setForm] = useState<LineForm>(emptyLineForm);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -63,25 +67,6 @@ export default function LinesPage() {
       structures.filter((structure) => structure.line === selectedLine)
     );
   }, [selectedLine, structures]);
-
-  useEffect(() => {
-    const savedLines = window.localStorage.getItem(linesStorageKey);
-    if (savedLines) {
-      const parsedLines = mergeRequiredS1Lines(JSON.parse(savedLines) as PipelineLine[]);
-      setLines(parsedLines);
-      window.localStorage.setItem(linesStorageKey, JSON.stringify(parsedLines));
-      setSelectedLine(parsedLines[0]?.name ?? "");
-    }
-
-    const savedStructures = window.localStorage.getItem(artStructuresStorageKey);
-    if (savedStructures) {
-      setStructures(JSON.parse(savedStructures));
-    }
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem(linesStorageKey, JSON.stringify(lines));
-  }, [lines]);
 
   useEffect(() => {
     if (!supabase) {
@@ -102,6 +87,14 @@ export default function LinesPage() {
         .single<Profile>();
 
       setUser(getAppUser(data.user.email, profileData?.full_name));
+      const [lineData, structureData] = await Promise.all([
+        fetchLines(supabase),
+        fetchArtStructures(supabase)
+      ]);
+
+      setLines(lineData);
+      setStructures(structureData);
+      setSelectedLine(lineData[0]?.name ?? "");
       setIsLoading(false);
     });
   }, [router, supabase]);
@@ -139,52 +132,47 @@ export default function LinesPage() {
     setIsFormOpen(false);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!user?.canEdit) return;
+    if (!user?.canEdit || !supabase) return;
 
     const nextName = buildLineName(form.mainLine, form.branchName);
 
     if (editingId) {
       const previousLine = lines.find((line) => line.id === editingId);
-      setLines((currentLines) =>
-        currentLines.map((line) =>
-          line.id === editingId
-            ? {
-                ...line,
-                ...form,
-                name: nextName
-              }
-            : line
-        )
-      );
+      const updatedLine = await updateLine(supabase, editingId, {
+        ...form,
+        name: nextName
+      });
 
       if (previousLine && previousLine.name !== nextName) {
+        await updateArtStructureLineName(supabase, previousLine.name, nextName);
         const nextStructures = structures.map((structure) =>
           structure.line === previousLine.name ? { ...structure, line: nextName } : structure
         );
         setStructures(nextStructures);
-        window.localStorage.setItem(artStructuresStorageKey, JSON.stringify(nextStructures));
         setSelectedLine(nextName);
       }
 
+      setLines((currentLines) =>
+        sortLines(currentLines.map((line) => (line.id === editingId ? updatedLine : line)))
+      );
       closeForm();
       return;
     }
 
-    const nextLine: PipelineLine = {
-      id: crypto.randomUUID(),
+    const nextLine = await createLine(supabase, {
       name: nextName,
       ...form
-    };
+    });
 
-    setLines((currentLines) => [...currentLines, nextLine]);
+    setLines((currentLines) => sortLines([...currentLines, nextLine]));
     setSelectedLine(nextName);
     closeForm();
   }
 
-  function deleteLine(line: PipelineLine) {
-    if (!user?.canEdit) return;
+  async function deleteLine(line: PipelineLine) {
+    if (!user?.canEdit || !supabase) return;
 
     const structureCount = structures.filter((structure) => structure.line === line.name).length;
     if (structureCount > 0) {
@@ -195,7 +183,8 @@ export default function LinesPage() {
     const shouldDelete = window.confirm("Bu hat silinsin mi?");
     if (!shouldDelete) return;
 
-    const nextLines = lines.filter((item) => item.id !== line.id);
+    await deleteLineById(supabase, line.id);
+    const nextLines = sortLines(lines.filter((item) => item.id !== line.id));
     setLines(nextLines);
     setSelectedLine(nextLines[0]?.name ?? "");
   }
