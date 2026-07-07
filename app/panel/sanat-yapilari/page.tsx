@@ -31,7 +31,7 @@ import {
   kilometerToMeters,
   sortArtStructuresByLineAndKm
 } from "@/lib/art-structures";
-import { defaultLines, linesStorageKey, sortLines } from "@/lib/lines";
+import { defaultLines, linesStorageKey, mergeRequiredS1Lines, sortLines } from "@/lib/lines";
 
 type Profile = {
   full_name: string;
@@ -141,7 +141,9 @@ export default function ArtStructuresPage() {
   useEffect(() => {
     const savedLines = window.localStorage.getItem(linesStorageKey);
     if (savedLines) {
-      setLineOptions(sortLines(JSON.parse(savedLines)).map((line) => line.name));
+      const parsedLines = mergeRequiredS1Lines(JSON.parse(savedLines));
+      window.localStorage.setItem(linesStorageKey, JSON.stringify(parsedLines));
+      setLineOptions(sortLines(parsedLines).map((line) => line.name));
     }
 
     const hatParam = new URLSearchParams(window.location.search).get("hat");

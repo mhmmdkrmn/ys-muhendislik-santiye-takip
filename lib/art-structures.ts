@@ -75,7 +75,7 @@ export const artStructures: ArtStructure[] = [
   {
     id: "sy-006",
     code: "SY-006",
-    line: "S1 Yedek14-2-1",
+    line: "S1 Yedek-14-2-1",
     kilometer: "15+520,00",
     type: "Hidrant",
     detail: "Cift cikisli, hat sonu, vantuzlu",

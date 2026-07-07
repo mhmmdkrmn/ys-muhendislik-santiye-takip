@@ -28,6 +28,7 @@ import {
   buildLineName,
   defaultLines,
   linesStorageKey,
+  mergeRequiredS1Lines,
   sortLines
 } from "@/lib/lines";
 
@@ -66,8 +67,9 @@ export default function LinesPage() {
   useEffect(() => {
     const savedLines = window.localStorage.getItem(linesStorageKey);
     if (savedLines) {
-      const parsedLines = JSON.parse(savedLines) as PipelineLine[];
+      const parsedLines = mergeRequiredS1Lines(JSON.parse(savedLines) as PipelineLine[]);
       setLines(parsedLines);
+      window.localStorage.setItem(linesStorageKey, JSON.stringify(parsedLines));
       setSelectedLine(parsedLines[0]?.name ?? "");
     }
 
