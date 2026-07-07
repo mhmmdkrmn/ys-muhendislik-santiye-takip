@@ -16,6 +16,8 @@ export type ArtStructure = {
   note?: string;
 };
 
+export const artStructuresStorageKey = "ys-art-structures-v1";
+
 export const artStructureTypes: ArtStructureType[] = [
   "Hidrant",
   "Vantuz",
@@ -28,7 +30,7 @@ export const artStructures: ArtStructure[] = [
   {
     id: "sy-001",
     code: "SY-001",
-    line: "S1",
+    line: "S1 Anahat",
     kilometer: "0+420,00",
     type: "Vantuz",
     detail: "Sade vantuz",
@@ -37,7 +39,7 @@ export const artStructures: ArtStructure[] = [
   {
     id: "sy-002",
     code: "SY-002",
-    line: "S1",
+    line: "S1 Anahat",
     kilometer: "2+180,00",
     type: "Hidrant",
     detail: "Tek cikisli, hat sonu degil, sade",
@@ -46,7 +48,7 @@ export const artStructures: ArtStructure[] = [
   {
     id: "sy-003",
     code: "SY-003",
-    line: "S1",
+    line: "S1 Yedek-11",
     kilometer: "5+760,00",
     type: "Tahliye",
     detail: "Cazibeli tahliye",
@@ -55,7 +57,7 @@ export const artStructures: ArtStructure[] = [
   {
     id: "sy-004",
     code: "SY-004",
-    line: "Yedek-11",
+    line: "S1 Yedek-14",
     kilometer: "8+050,00",
     type: "Ayrim Yapisi",
     detail: "Yedek-11 ayrim noktasi",
@@ -64,7 +66,7 @@ export const artStructures: ArtStructure[] = [
   {
     id: "sy-005",
     code: "SY-005",
-    line: "S1",
+    line: "P1 Anahat",
     kilometer: "12+300,00",
     type: "Hat Kapama Vanasi",
     detail: "Ana hat kapama vanasi",
@@ -73,7 +75,7 @@ export const artStructures: ArtStructure[] = [
   {
     id: "sy-006",
     code: "SY-006",
-    line: "Yedek-11",
+    line: "S1 Yedek14-2-1",
     kilometer: "15+520,00",
     type: "Hidrant",
     detail: "Cift cikisli, hat sonu, vantuzlu",
@@ -83,7 +85,7 @@ export const artStructures: ArtStructure[] = [
   {
     id: "sy-007",
     code: "SY-007",
-    line: "Yedek-11",
+    line: "P1 Anahat",
     kilometer: "18+900,00",
     type: "Tahliye",
     detail: "Pompajli tahliye",
@@ -108,4 +110,17 @@ export function getArtStructureLines() {
   return Array.from(new Set(artStructures.map((item) => item.line))).sort((a, b) =>
     a.localeCompare(b, "tr")
   );
+}
+
+export function sortArtStructuresByLineAndKm(items: ArtStructure[]) {
+  return [...items].sort((a, b) => {
+    const lineCompare = a.line.localeCompare(b.line, "tr", {
+      numeric: true,
+      sensitivity: "base"
+    });
+
+    if (lineCompare !== 0) return lineCompare;
+
+    return kilometerToMeters(a.kilometer) - kilometerToMeters(b.kilometer);
+  });
 }

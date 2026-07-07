@@ -26,9 +26,12 @@ import {
   ArtStructure,
   ArtStructureType,
   artStructures,
+  artStructuresStorageKey,
   artStructureTypes,
-  kilometerToMeters
+  kilometerToMeters,
+  sortArtStructuresByLineAndKm
 } from "@/lib/art-structures";
+import { defaultLines, linesStorageKey, sortLines } from "@/lib/lines";
 
 type Profile = {
   full_name: string;
@@ -45,8 +48,6 @@ const emptyForm: FormState = {
   status: "Tamamlanmadi",
   note: ""
 };
-
-const storageKey = "ys-art-structures-v1";
 
 function normalizeText(value: string) {
   return value.toLocaleLowerCase("tr-TR").trim();
@@ -88,6 +89,7 @@ export default function ArtStructuresPage() {
   const [user, setUser] = useState<AppUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState<ArtStructure[]>(artStructures);
+  const [lineOptions, setLineOptions] = useState(defaultLines.map((line) => line.name));
   const [typeFilter, setTypeFilter] = useState("Tum Turler");
   const [lineFilter, setLineFilter] = useState("Tum Hatlar");
   const [statusFilter, setStatusFilter] = useState("Tum Durumlar");
@@ -99,17 +101,15 @@ export default function ArtStructuresPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const lines = useMemo(() => {
-    return Array.from(new Set(items.map((item) => item.line).filter(Boolean))).sort((a, b) =>
-      a.localeCompare(b, "tr")
-    );
-  }, [items]);
+    return lineOptions;
+  }, [lineOptions]);
 
   const filteredStructures = useMemo(() => {
     const query = normalizeText(search);
     const startMeter = startKm ? kilometerToMeters(startKm) : null;
     const endMeter = endKm ? kilometerToMeters(endKm) : null;
 
-    return items
+    const filtered = items
       .filter((item) => typeFilter === "Tum Turler" || item.type === typeFilter)
       .filter((item) => lineFilter === "Tum Hatlar" || item.line === lineFilter)
       .filter((item) => statusFilter === "Tum Durumlar" || item.status === statusFilter)
@@ -124,8 +124,9 @@ export default function ArtStructuresPage() {
         if (startMeter !== null && meters < startMeter) return false;
         if (endMeter !== null && meters > endMeter) return false;
         return true;
-      })
-      .sort((a, b) => kilometerToMeters(a.kilometer) - kilometerToMeters(b.kilometer));
+      });
+
+    return sortArtStructuresByLineAndKm(filtered);
   }, [endKm, items, lineFilter, search, startKm, statusFilter, typeFilter]);
 
   const counts = useMemo(() => {
@@ -138,14 +139,24 @@ export default function ArtStructuresPage() {
   }, [items]);
 
   useEffect(() => {
-    const savedItems = window.localStorage.getItem(storageKey);
+    const savedLines = window.localStorage.getItem(linesStorageKey);
+    if (savedLines) {
+      setLineOptions(sortLines(JSON.parse(savedLines)).map((line) => line.name));
+    }
+
+    const hatParam = new URLSearchParams(window.location.search).get("hat");
+    if (hatParam) {
+      setLineFilter(hatParam);
+    }
+
+    const savedItems = window.localStorage.getItem(artStructuresStorageKey);
     if (savedItems) {
       setItems(JSON.parse(savedItems));
     }
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem(storageKey, JSON.stringify(items));
+    window.localStorage.setItem(artStructuresStorageKey, JSON.stringify(items));
   }, [items]);
 
   useEffect(() => {
@@ -189,6 +200,7 @@ export default function ArtStructuresPage() {
 
     setForm({
       ...emptyForm,
+      line: lineFilter !== "Tum Hatlar" ? lineFilter : lines[0] ?? "",
       code: `SY-${String(items.length + 1).padStart(3, "0")}`
     });
     setEditingId(null);
@@ -345,6 +357,34 @@ export default function ArtStructuresPage() {
           </div>
         </div>
 
+        <div className="mt-5 flex gap-2 overflow-x-auto pb-1 print:hidden">
+          <button
+            className={
+              lineFilter === "Tum Hatlar"
+                ? "shrink-0 rounded bg-[#1f4d3a] px-3 py-2 text-sm font-semibold text-white"
+                : "shrink-0 rounded border border-[#c8c0b3] bg-white px-3 py-2 text-sm font-semibold"
+            }
+            onClick={() => setLineFilter("Tum Hatlar")}
+            type="button"
+          >
+            Tum Hatlar
+          </button>
+          {lines.map((line) => (
+            <button
+              className={
+                lineFilter === line
+                  ? "shrink-0 rounded bg-[#1f4d3a] px-3 py-2 text-sm font-semibold text-white"
+                  : "shrink-0 rounded border border-[#c8c0b3] bg-white px-3 py-2 text-sm font-semibold"
+              }
+              key={line}
+              onClick={() => setLineFilter(line)}
+              type="button"
+            >
+              {line}
+            </button>
+          ))}
+        </div>
+
         {isFormOpen && user?.canEdit ? (
           <form
             className="mt-5 grid gap-4 rounded border border-[#d7d0c4] bg-white p-4 print:hidden"
@@ -369,13 +409,16 @@ export default function ArtStructuresPage() {
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 Hat
-                <input
-                  className="rounded border border-[#c8c0b3] px-3 py-2 outline-none focus:border-[#1f4d3a]"
+                <select
+                  className="rounded border border-[#c8c0b3] bg-white px-3 py-2 outline-none focus:border-[#1f4d3a]"
                   onChange={(event) => updateForm("line", event.target.value)}
-                  placeholder="S1 veya Yedek-11"
                   required
                   value={form.line}
-                />
+                >
+                  {lines.map((line) => (
+                    <option key={line}>{line}</option>
+                  ))}
+                </select>
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 Kilometre

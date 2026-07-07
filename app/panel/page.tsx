@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowUpRight, Construction, HardHat, LogOut } from "lucide-react";
+import { ArrowUpRight, Construction, GitBranch, HardHat, LogOut } from "lucide-react";
 import { createSupabaseClient } from "@/lib/supabase";
 import { AppUser, getAppUser } from "@/lib/permissions";
 
@@ -97,6 +97,21 @@ export default function PanelPage() {
             <h2 className="mt-5 text-lg font-semibold">Sanat Yapilari</h2>
             <p className="mt-2 text-sm leading-6 text-[#61706b]">
               Hatlara bagli sanat yapilarini kilometre sirasi ve tur filtreleriyle takip et.
+            </p>
+          </Link>
+          <Link
+            className="group rounded border border-[#d7d0c4] bg-white p-5 shadow-sm transition hover:border-[#1f4d3a]"
+            href="/panel/hatlar"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <span className="grid size-11 place-items-center rounded bg-[#eef0ec] text-[#1f4d3a]">
+                <GitBranch size={22} />
+              </span>
+              <ArrowUpRight className="text-[#61706b] transition group-hover:text-[#1f4d3a]" size={19} />
+            </div>
+            <h2 className="mt-5 text-lg font-semibold">Hatlar</h2>
+            <p className="mt-2 text-sm leading-6 text-[#61706b]">
+              S1 ve P1 anahatlarini, yedek hatlari ve hatta bagli yapilari yonet.
             </p>
           </Link>
         </div>
