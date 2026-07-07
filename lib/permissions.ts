@@ -24,6 +24,16 @@ export function getAppUser(email?: string | null, fallbackName = "Kullanici"): A
       email: normalizedEmail,
       name: "Aydin Akgun",
       title: "Proje Muduru",
+      canEdit: true,
+      canExport: true
+    };
+  }
+
+  if (normalizedEmail === "bouth@ysmuhendislik.com") {
+    return {
+      email: normalizedEmail,
+      name: "Bouth",
+      title: "Goruntuleme",
       canEdit: false,
       canExport: true
     };
