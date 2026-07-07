@@ -37,6 +37,9 @@ create table if not exists public.art_structures (
   updated_at timestamptz not null default now()
 );
 
+create unique index if not exists art_structures_line_kilometer_unique
+on public.art_structures (line, kilometer);
+
 alter table public.pipeline_lines enable row level security;
 alter table public.art_structure_presets enable row level security;
 alter table public.art_structures enable row level security;

@@ -98,6 +98,10 @@ function toArtStructurePayload(item: Omit<ArtStructure, "id">) {
   };
 }
 
+function isUniqueViolation(error: { code?: string; message?: string }) {
+  return error.code === "23505" || Boolean(error.message?.includes("duplicate key"));
+}
+
 export async function fetchLines(supabase: SupabaseClient) {
   const { data, error } = await supabase
     .from("pipeline_lines")
@@ -174,7 +178,12 @@ export async function createArtStructure(
     .select("*")
     .single();
 
-  if (error) throw error;
+  if (error) {
+    if (isUniqueViolation(error)) {
+      throw new Error("Bu hatta ayni kilometrede zaten bir sanat yapisi var.");
+    }
+    throw error;
+  }
   return fromArtStructureRow(data as ArtStructureRow);
 }
 
@@ -190,7 +199,12 @@ export async function updateArtStructure(
     .select("*")
     .single();
 
-  if (error) throw error;
+  if (error) {
+    if (isUniqueViolation(error)) {
+      throw new Error("Bu hatta ayni kilometrede zaten bir sanat yapisi var.");
+    }
+    throw error;
+  }
   return fromArtStructureRow(data as ArtStructureRow);
 }
 

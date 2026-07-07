@@ -187,6 +187,7 @@ export default function ArtStructuresPage() {
   const [form, setForm] = useState<FormState>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [formError, setFormError] = useState("");
   const [selectedReportFields, setSelectedReportFields] =
     useState<ReportFieldKey[]>(defaultReportFieldKeys);
 
@@ -300,6 +301,7 @@ export default function ArtStructuresPage() {
     setForm(emptyForm);
     setEditingId(null);
     setIsFormOpen(false);
+    setFormError("");
   }
 
   function openCreateForm() {
@@ -310,6 +312,7 @@ export default function ArtStructuresPage() {
       line: lineFilter !== "Tum Hatlar" ? lineFilter : lines[0] ?? "",
       code: `SY-${String(items.length + 1).padStart(3, "0")}`
     });
+    setFormError("");
     setEditingId(null);
     setIsFormOpen(true);
   }
@@ -337,6 +340,7 @@ export default function ArtStructuresPage() {
       includedInProgressPayment: item.includedInProgressPayment ?? false,
       note: item.note ?? ""
     });
+    setFormError("");
     setEditingId(item.id);
     setIsFormOpen(true);
   }
@@ -344,6 +348,19 @@ export default function ArtStructuresPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!user?.canEdit || !supabase) return;
+    setFormError("");
+
+    const hasDuplicate = items.some(
+      (item) =>
+        item.id !== editingId &&
+        item.line === form.line &&
+        item.kilometer.trim() === form.kilometer.trim()
+    );
+
+    if (hasDuplicate) {
+      setFormError("Bu hatta ayni kilometrede zaten bir sanat yapisi var.");
+      return;
+    }
 
     const isComplete =
       Boolean(form.valveInstalled) &&
@@ -359,17 +376,25 @@ export default function ArtStructuresPage() {
     };
 
     if (editingId) {
-      const updatedItem = await updateArtStructure(supabase, editingId, nextForm);
-      setItems((currentItems) =>
-        currentItems.map((item) => (item.id === editingId ? updatedItem : item))
-      );
-      resetForm();
+      try {
+        const updatedItem = await updateArtStructure(supabase, editingId, nextForm);
+        setItems((currentItems) =>
+          currentItems.map((item) => (item.id === editingId ? updatedItem : item))
+        );
+        resetForm();
+      } catch (error) {
+        setFormError(error instanceof Error ? error.message : "Kayit guncellenemedi.");
+      }
       return;
     }
 
-    const createdItem = await createArtStructure(supabase, nextForm);
-    setItems((currentItems) => [...currentItems, createdItem]);
-    resetForm();
+    try {
+      const createdItem = await createArtStructure(supabase, nextForm);
+      setItems((currentItems) => [...currentItems, createdItem]);
+      resetForm();
+    } catch (error) {
+      setFormError(error instanceof Error ? error.message : "Kayit olusturulamadi.");
+    }
   }
 
   async function addPreset() {
@@ -549,6 +574,12 @@ export default function ArtStructuresPage() {
                 <X size={18} />
               </button>
             </div>
+
+            {formError ? (
+              <div className="rounded border border-[#d8b6ad] bg-[#f6e7e1] px-3 py-2 text-sm font-medium text-[#9c3d2f]">
+                {formError}
+              </div>
+            ) : null}
 
             <div className="grid gap-3 md:grid-cols-4">
               <label className="grid gap-2 text-sm font-medium">
