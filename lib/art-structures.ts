@@ -23,6 +23,7 @@ export type ArtStructure = {
   coverInstalled?: boolean;
   needsRevision?: boolean;
   revisionNote?: string;
+  includedInProgressPayment?: boolean;
   note?: string;
 };
 

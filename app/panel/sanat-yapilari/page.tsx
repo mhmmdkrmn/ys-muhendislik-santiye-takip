@@ -57,6 +57,7 @@ type ReportFieldKey =
   | "coverInstalled"
   | "needsRevision"
   | "revisionNote"
+  | "includedInProgressPayment"
   | "status"
   | "note";
 
@@ -83,6 +84,7 @@ const emptyForm: FormState = {
   coverInstalled: false,
   needsRevision: false,
   revisionNote: "",
+  includedInProgressPayment: false,
   note: ""
 };
 
@@ -115,6 +117,11 @@ const reportFields: ReportField[] = [
   { key: "coverInstalled", label: "Kapak", getValue: (item) => (item.coverInstalled ? "Evet" : "Hayir") },
   { key: "needsRevision", label: "Duzeltme", getValue: (item) => (item.needsRevision ? "Evet" : "Hayir") },
   { key: "revisionNote", label: "Duzeltme Notu", getValue: (item) => item.revisionNote ?? "" },
+  {
+    key: "includedInProgressPayment",
+    label: "Hakedise Alindi",
+    getValue: (item) => (item.includedInProgressPayment ? "Evet" : "Hayir")
+  },
   { key: "status", label: "Durum", getValue: (item) => item.status },
   { key: "note", label: "Not", getValue: (item) => item.note ?? "" }
 ];
@@ -167,6 +174,7 @@ export default function ArtStructuresPage() {
   const [typeFilter, setTypeFilter] = useState("Tum Turler");
   const [lineFilter, setLineFilter] = useState("Tum Hatlar");
   const [statusFilter, setStatusFilter] = useState("Tum Durumlar");
+  const [progressPaymentFilter, setProgressPaymentFilter] = useState("Tum Hakedisler");
   const [search, setSearch] = useState("");
   const [startKm, setStartKm] = useState("");
   const [endKm, setEndKm] = useState("");
@@ -190,6 +198,11 @@ export default function ArtStructuresPage() {
       .filter((item) => lineFilter === "Tum Hatlar" || item.line === lineFilter)
       .filter((item) => statusFilter === "Tum Durumlar" || item.status === statusFilter)
       .filter((item) => {
+        if (progressPaymentFilter === "Tum Hakedisler") return true;
+        if (progressPaymentFilter === "Hakedise Alindi") return Boolean(item.includedInProgressPayment);
+        return !item.includedInProgressPayment;
+      })
+      .filter((item) => {
         if (!query) return true;
         return [
           item.code,
@@ -201,6 +214,7 @@ export default function ArtStructuresPage() {
           item.coverSize ?? "",
           item.airValveDiameter ?? "",
           item.revisionNote ?? "",
+          item.includedInProgressPayment ? "hakedise alindi" : "hakedise alinmadi",
           item.note ?? ""
         ]
           .map(normalizeText)
@@ -214,7 +228,7 @@ export default function ArtStructuresPage() {
       });
 
     return sortArtStructuresByLineAndKm(filtered);
-  }, [endKm, items, lineFilter, search, startKm, statusFilter, typeFilter]);
+  }, [endKm, items, lineFilter, progressPaymentFilter, search, startKm, statusFilter, typeFilter]);
 
   const counts = useMemo(() => {
     const completed = items.filter((item) => item.status === "Tamamlandi").length;
@@ -333,6 +347,7 @@ export default function ArtStructuresPage() {
       coverInstalled: item.coverInstalled ?? false,
       needsRevision: item.needsRevision ?? false,
       revisionNote: item.revisionNote ?? "",
+      includedInProgressPayment: item.includedInProgressPayment ?? false,
       note: item.note ?? ""
     });
     setEditingId(item.id);
@@ -687,6 +702,7 @@ export default function ArtStructuresPage() {
                 ["steelPipeInstalled", "Celik boru takili mi"],
                 ["flangeInstalled", "Flans takili mi"],
                 ["coverInstalled", "Kapak takili mi"],
+                ["includedInProgressPayment", "Hakedise alindi mi"],
                 ["needsRevision", "Duzeltme gerekli mi"]
               ].map(([key, label]) => (
                 <label className="flex items-center gap-2 text-sm font-medium" key={key}>
@@ -742,7 +758,7 @@ export default function ArtStructuresPage() {
           </form>
         ) : null}
 
-        <div className="mt-5 grid gap-3 rounded border border-[#d7d0c4] bg-white p-4 md:grid-cols-6 print:hidden">
+        <div className="mt-5 grid gap-3 rounded border border-[#d7d0c4] bg-white p-4 md:grid-cols-7 print:hidden">
           <label className="grid gap-2 text-sm font-medium md:col-span-2">
             <span className="inline-flex items-center gap-2">
               <Search size={15} />
@@ -800,6 +816,19 @@ export default function ArtStructuresPage() {
               <option>Tum Durumlar</option>
               <option>Tamamlanmadi</option>
               <option>Tamamlandi</option>
+            </select>
+          </label>
+
+          <label className="grid gap-2 text-sm font-medium">
+            Hakedis
+            <select
+              className="rounded border border-[#c8c0b3] bg-white px-3 py-2 outline-none focus:border-[#1f4d3a]"
+              onChange={(event) => setProgressPaymentFilter(event.target.value)}
+              value={progressPaymentFilter}
+            >
+              <option>Tum Hakedisler</option>
+              <option>Hakedise Alindi</option>
+              <option>Hakedise Alinmadi</option>
             </select>
           </label>
 
@@ -910,6 +939,9 @@ export default function ArtStructuresPage() {
                     {item.steelPipeInstalled ? "ok" : "eksik"} | Flans{" "}
                     {item.flangeInstalled ? "ok" : "eksik"} | Kapak{" "}
                     {item.coverInstalled ? "ok" : "eksik"}
+                  </p>
+                  <p className="mt-1 text-xs text-[#61706b]">
+                    Hakedis: {item.includedInProgressPayment ? "Alindi" : "Alinmadi"}
                   </p>
                   {item.needsRevision ? (
                     <p className="mt-1 text-xs font-semibold text-[#9c3d2f]">
