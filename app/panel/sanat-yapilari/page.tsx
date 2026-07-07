@@ -49,6 +49,7 @@ type ReportFieldKey =
   | "detail"
   | "concreteSize"
   | "coverSize"
+  | "airValveDiameter"
   | "valveInstalled"
   | "mechanicalInstalled"
   | "steelPipeInstalled"
@@ -74,6 +75,7 @@ const emptyForm: FormState = {
   status: "Tamamlanmadi",
   concreteSize: "",
   coverSize: "",
+  airValveDiameter: "",
   valveInstalled: false,
   mechanicalInstalled: false,
   steelPipeInstalled: false,
@@ -97,6 +99,7 @@ const reportFields: ReportField[] = [
   { key: "detail", label: "Ozellik", getValue: (item) => item.detail },
   { key: "concreteSize", label: "Betonarme Olcusu", getValue: (item) => item.concreteSize ?? "" },
   { key: "coverSize", label: "Kapak Olcusu", getValue: (item) => item.coverSize ?? "" },
+  { key: "airValveDiameter", label: "Vantuz Capi", getValue: (item) => item.airValveDiameter ?? "" },
   { key: "valveInstalled", label: "Vana", getValue: (item) => (item.valveInstalled ? "Evet" : "Hayir") },
   {
     key: "mechanicalInstalled",
@@ -196,6 +199,7 @@ export default function ArtStructuresPage() {
           item.detail,
           item.concreteSize ?? "",
           item.coverSize ?? "",
+          item.airValveDiameter ?? "",
           item.revisionNote ?? "",
           item.note ?? ""
         ]
@@ -224,6 +228,10 @@ export default function ArtStructuresPage() {
   const selectedFields = useMemo(() => {
     return reportFields.filter((field) => selectedReportFields.includes(field.key));
   }, [selectedReportFields]);
+
+  const shouldAskAirValveDiameter = useMemo(() => {
+    return form.type === "Vantuz" || normalizeText(form.detail).includes("vantuz");
+  }, [form.detail, form.type]);
 
   useEffect(() => {
     const savedLines = window.localStorage.getItem(linesStorageKey);
@@ -317,6 +325,7 @@ export default function ArtStructuresPage() {
       status: item.status,
       concreteSize: item.concreteSize ?? "",
       coverSize: item.coverSize ?? "",
+      airValveDiameter: item.airValveDiameter ?? "",
       valveInstalled: item.valveInstalled ?? false,
       mechanicalInstalled: item.mechanicalInstalled ?? false,
       steelPipeInstalled: item.steelPipeInstalled ?? false,
@@ -639,7 +648,7 @@ export default function ArtStructuresPage() {
               </button>
             </div>
 
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-3">
               <label className="grid gap-2 text-sm font-medium">
                 Betonarme olcusu
                 <input
@@ -658,6 +667,17 @@ export default function ArtStructuresPage() {
                   value={form.coverSize}
                 />
               </label>
+              {shouldAskAirValveDiameter ? (
+                <label className="grid gap-2 text-sm font-medium">
+                  Vantuz capi
+                  <input
+                    className="rounded border border-[#c8c0b3] px-3 py-2 outline-none focus:border-[#1f4d3a]"
+                    onChange={(event) => updateForm("airValveDiameter", event.target.value)}
+                    placeholder="Orn. 50 mm"
+                    value={form.airValveDiameter}
+                  />
+                </label>
+              ) : null}
             </div>
 
             <div className="grid gap-3 rounded border border-[#d7d0c4] bg-[#f8f6f1] p-3 md:grid-cols-3">
@@ -882,6 +902,7 @@ export default function ArtStructuresPage() {
                   <p className="mt-1 text-sm text-[#61706b]">{item.detail}</p>
                   <p className="mt-1 text-xs text-[#61706b]">
                     Betonarme: {item.concreteSize || "-"} | Kapak: {item.coverSize || "-"}
+                    {item.airValveDiameter ? ` | Vantuz capi: ${item.airValveDiameter}` : ""}
                   </p>
                   <p className="mt-1 text-xs text-[#61706b]">
                     Vana {item.valveInstalled ? "ok" : "eksik"} | Mekanik{" "}

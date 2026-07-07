@@ -15,6 +15,7 @@ export type ArtStructure = {
   status: "Tamamlanmadi" | "Tamamlandi";
   concreteSize?: string;
   coverSize?: string;
+  airValveDiameter?: string;
   valveInstalled?: boolean;
   mechanicalInstalled?: boolean;
   steelPipeInstalled?: boolean;
