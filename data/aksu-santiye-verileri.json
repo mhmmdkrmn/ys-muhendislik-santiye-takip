@@ -1,0 +1,1154 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "name": "ANTALYA İLİ AKSU İLÇESİ 1.KISIM AT VE TİGH YAPIM İŞİ",
+      "info": {
+        "ihale_yeri": "ANTALYA",
+        "bolge_sube": "13 BÖLGE / TOPLULAŞTIRMA ŞUBE MÜDÜRLÜĞÜ",
+        "ihale_bedeli": "169.078.000,00 TL",
+        "ihale_tarihi": "26.05.2025",
+        "yer_teslim_tarihi": "08.08.2025",
+        "sozlesme_tarih_no": "31.07.2025",
+        "is_bitim_tarihi": "28.07.2027",
+        "uzatimli_is_bitim_tarihi": "21.12.2027"
+      },
+      "units": [
+        "adet",
+        "kilogram",
+        "kilometre",
+        "metre",
+        "metrekare",
+        "metreküp",
+        "takım",
+        "ton",
+        "çift"
+      ],
+      "kesif": [
+        {
+          "poz_no": "TİGH.001",
+          "ad": "Her Cins ve Klasta Zeminin Kazılması, Dolgu Yapılması, Kazı Fazlasının Depoya Nakli ve Konulması",
+          "birim": "metreküp",
+          "metraj": 315000.0,
+          "fiyat": 90.2,
+          "toplam": 28413000.0
+        },
+        {
+          "poz_no": "TİGH.002",
+          "ad": "Her Türlü İnşaat ve İmalatta Kullanılmak Üzere Beton veya Betonarme Betonu",
+          "birim": "metreküp",
+          "metraj": 3500.0,
+          "fiyat": 4030.0,
+          "toplam": 14105000.0
+        },
+        {
+          "poz_no": "TİGH.003",
+          "ad": "Betonarme Demirlerinin Hazırlanması ve Bükülüp Yerine Konması",
+          "birim": "ton",
+          "metraj": 300.0,
+          "fiyat": 27600.0,
+          "toplam": 8280000.0
+        },
+        {
+          "poz_no": "TİGH.004",
+          "ad": "Ø813 mm Dış Çaplı t=6,3 mm St 44 Çelik Sınıfında İçi Epoksi Dışı PE Kaplı Spiral Kaynaklı Çelik Boruların ve Özel Parçalarının Temini, Nakli, Boruların ve Özel Parçalarının Sifon İçerisine Döşenmesi",
+          "birim": "metre",
+          "metraj": 400.0,
+          "fiyat": 7320.0,
+          "toplam": 2928000.0
+        },
+        {
+          "poz_no": "TİGH.005",
+          "ad": "Çeşitli Demir İşleri",
+          "birim": "kilogram",
+          "metraj": 10000.0,
+          "fiyat": 105.0,
+          "toplam": 1050000.0
+        },
+        {
+          "poz_no": "TİGH.006",
+          "ad": "Her Tipteki Kanalet Demontajı",
+          "birim": "metre",
+          "metraj": 40000.0,
+          "fiyat": 451.0,
+          "toplam": 18040000.0
+        },
+        {
+          "poz_no": "TİGH.007",
+          "ad": "Her Tipteki Kanalet Montajı",
+          "birim": "metre",
+          "metraj": 10000.0,
+          "fiyat": 551.0,
+          "toplam": 5510000.0
+        },
+        {
+          "poz_no": "TİGH.008",
+          "ad": "Her Tipteki Kanaletin Demontajından Sonra Depo Yerine Gitmeden Montajının Yapılması",
+          "birim": "metre",
+          "metraj": 10000.0,
+          "fiyat": 340.0,
+          "toplam": 3400000.0
+        },
+        {
+          "poz_no": "TİGH.009",
+          "ad": "Tarla İçi Yol Yapımı (4,00 Metre Genişlik) Hendeksiz",
+          "birim": "kilometre",
+          "metraj": 175.0,
+          "fiyat": 9560.0,
+          "toplam": 1673000.0
+        },
+        {
+          "poz_no": "TİGH.010",
+          "ad": "Tarla İçi Yol Yapımı (6,00 Metre Genişlik) Hendeksiz",
+          "birim": "kilometre",
+          "metraj": 75.0,
+          "fiyat": 10500.0,
+          "toplam": 787500.0
+        },
+        {
+          "poz_no": "TİGH.011",
+          "ad": "Tarla İçi Yol Yapımında Hendek Açılması(Tek Taraf İçin)",
+          "birim": "kilometre",
+          "metraj": 200.0,
+          "fiyat": 17000.0,
+          "toplam": 3400000.0
+        },
+        {
+          "poz_no": "TİGH.012",
+          "ad": "Stabilize Malzemenin Temini, Figüresi, Serilmesi, Sulanması ve Sıkıştırılması",
+          "birim": "metreküp",
+          "metraj": 250000.0,
+          "fiyat": 150.0,
+          "toplam": 37500000.0
+        },
+        {
+          "poz_no": "TİGH.013",
+          "ad": "Stabilize Malzeme Nakli",
+          "birim": "ton",
+          "metraj": 400000.0,
+          "fiyat": 66.8,
+          "toplam": 26720000.0
+        },
+        {
+          "poz_no": "TİGH.014",
+          "ad": "Yol Geçidi 5,50 Metre",
+          "birim": "adet",
+          "metraj": 75.0,
+          "fiyat": 16000.0,
+          "toplam": 1200000.0
+        },
+        {
+          "poz_no": "TİGH.015",
+          "ad": "Yol Geçidi 7,50 Metre",
+          "birim": "adet",
+          "metraj": 75.0,
+          "fiyat": 19000.0,
+          "toplam": 1425000.0
+        },
+        {
+          "poz_no": "İNŞ.001",
+          "ad": "0,50 + 0,50 + (100mm dolgulu) Poliizosiyanurat (PIR) yalıtımlı sandviç çatı paneli (TS EN 14509)",
+          "birim": "metrekare",
+          "metraj": 125.0,
+          "fiyat": 350.0,
+          "toplam": 43750.0
+        },
+        {
+          "poz_no": "İNŞ.002",
+          "ad": "2.5 cm kalınlığında 400 kg çimento dozlu şap yapılması",
+          "birim": "metrekare",
+          "metraj": 120.0,
+          "fiyat": 400.0,
+          "toplam": 48000.0
+        },
+        {
+          "poz_no": "İNŞ.003",
+          "ad": "4,3 mm kalınlıkta elastomer esaslı (-20 °C soğukta bükülmeli) polyester keçe taşıyıcılı bir yüzü mineral kaplı polimer bitümlü örtü ile tek kat su yalıtımı yapılması",
+          "birim": "metrekare",
+          "metraj": 140.0,
+          "fiyat": 600.0,
+          "toplam": 84000.0
+        },
+        {
+          "poz_no": "İNŞ.004",
+          "ad": "250/350 kg çimento dozlu kaba ve ince harçla sıva yapılması (dış cephe sıvası)",
+          "birim": "metrekare",
+          "metraj": 500.0,
+          "fiyat": 280.0,
+          "toplam": 140000.0
+        },
+        {
+          "poz_no": "İNŞ.005",
+          "ad": "200/250 kg kireç/çimento karışımı kaba ve ince harçla sıva yapılması (iç cephe sıvası)",
+          "birim": "metrekare",
+          "metraj": 450.0,
+          "fiyat": 350.0,
+          "toplam": 157500.0
+        },
+        {
+          "poz_no": "İNŞ.006",
+          "ad": "250/350 kg kireç/çimento karışımı kaba ve ince harçla sıva yapılması (tavan sıvası)",
+          "birim": "metrekare",
+          "metraj": 125.0,
+          "fiyat": 600.0,
+          "toplam": 75000.0
+        },
+        {
+          "poz_no": "İNŞ.007",
+          "ad": "Ø 100 mm çapında bir ucu muflu sert PVC yağmur borusu temini ve yerine tesbiti",
+          "birim": "metre",
+          "metraj": 60.0,
+          "fiyat": 180.0,
+          "toplam": 10800.0
+        },
+        {
+          "poz_no": "İNŞ.008",
+          "ad": "Pvc ve alüminyum doğramaya profil ile 6+6 mm kalınlıkta 12 mm ara boşluklu çift camlı pencere ünitesi takılması",
+          "birim": "metrekare",
+          "metraj": 3.0,
+          "fiyat": 2500.0,
+          "toplam": 7500.0
+        },
+        {
+          "poz_no": "İNŞ.009",
+          "ad": "Yeni sıva yüzeylere astar uygulanarak iki kat sentetik esaslı parlak boya yapılması (iç cephe)",
+          "birim": "metrekare",
+          "metraj": 125.0,
+          "fiyat": 280.0,
+          "toplam": 35000.0
+        },
+        {
+          "poz_no": "İNŞ.010",
+          "ad": "Brüt beton, sıvalı veya eski boyalı yüzeylere, astar uygulanarak Saf akrilik esaslı Dış Cephe Boyası (V2:W3:G2) yapılması (dış cephe)",
+          "birim": "metrekare",
+          "metraj": 450.0,
+          "fiyat": 290.0,
+          "toplam": 130500.0
+        },
+        {
+          "poz_no": "İNŞ.011",
+          "ad": "Kare ve dikdörtgen profillerle pencere ve kapı yapılması ve yerine konulması",
+          "birim": "kilogram",
+          "metraj": 1400.0,
+          "fiyat": 150.0,
+          "toplam": 210000.0
+        },
+        {
+          "poz_no": "İNŞ.012",
+          "ad": "Lama ve profil demirlerden çeşitli demir işleri yapılması ve yerine konulması",
+          "birim": "kilogram",
+          "metraj": 2600.0,
+          "fiyat": 110.0,
+          "toplam": 286000.0
+        },
+        {
+          "poz_no": "İNŞ.013",
+          "ad": "1,50 m yükseklikte Ø 4,5 mm çapında 50 x 150 mm göz aralıklı min. 3 bükümlü sıcak daldırma galvaniz üzeri elektrostatik polyester toz boyalı panel teller ile çit yapılması (direk aralığı 2,5 m olacak şekilde duvar üzeri uygulama)",
+          "birim": "metre",
+          "metraj": 120.0,
+          "fiyat": 500.0,
+          "toplam": 60000.0
+        },
+        {
+          "poz_no": "İNŞ.014",
+          "ad": "Pik döküm 15x15 cm Ø70 çıkışlı yer süzgecinin işyerinde temini ve yerine montajı (TS-327'ye uygun)",
+          "birim": "adet",
+          "metraj": 2.0,
+          "fiyat": 250.0,
+          "toplam": 500.0
+        },
+        {
+          "poz_no": "İNŞ.015",
+          "ad": "PATLAYICI MADDE KULLANMADAN DEMİRLİ VE DEMİRSİZ BETON İNŞAATIN YIKILMASI",
+          "birim": "metreküp",
+          "metraj": 511.46,
+          "fiyat": 320.0,
+          "toplam": 163667.19999999998
+        },
+        {
+          "poz_no": "İNŞ.016",
+          "ad": "Pompa İstasyonu Uygulama Projeleri Hazırlanması",
+          "birim": "takım",
+          "metraj": 1.0,
+          "fiyat": 530000.0,
+          "toplam": 530000.0
+        },
+        {
+          "poz_no": "MEK.001",
+          "ad": "Demir borudan kaynakla korkuluk yapılması, yerine konulması",
+          "birim": "kilogram",
+          "metraj": 400.0,
+          "fiyat": 175.0,
+          "toplam": 70000.0
+        },
+        {
+          "poz_no": "MEK.002",
+          "ad": "Fonttan ızgara, kapak, garguy yapılması,yerine konulması.",
+          "birim": "kilogram",
+          "metraj": 750.0,
+          "fiyat": 200.0,
+          "toplam": 150000.0
+        },
+        {
+          "poz_no": "MEK.003",
+          "ad": "Anma ölçüsü 8\" inç dış cap/et kalınlığı 219,1/4,5 mm/mm ağırlığı 23,8 kg/m Düz spiral kaynaklı çelik boru (S235jr (St37) kalite) (TS EN 10217-1) (bina içinde kaynaklı döşenmiş boru montaj malzemesi bedeli dahil)",
+          "birim": "metre",
+          "metraj": 1.5,
+          "fiyat": 5000.0,
+          "toplam": 7500.0
+        },
+        {
+          "poz_no": "MEK.004",
+          "ad": "Anma ölçüsü 16\" inç dış cap/et kalınlığı 406,4/5,6 mm/mm ağırlığı 55,3 kg/m Düz spiral kaynaklı çelik boru (S235jr (St37) kalite) (TS EN 10217-1) (bina içinde kaynaklı döşenmiş boru montaj malzemesi bedeli dahil)",
+          "birim": "metre",
+          "metraj": 4.0,
+          "fiyat": 9000.0,
+          "toplam": 36000.0
+        },
+        {
+          "poz_no": "MEK.005",
+          "ad": "Anma ölçüsü 40\" inç dış cap/et kalınlığı 1016,0/7,1 mm/mm ağırlığı 177,0 kg/m Düz spiral kaynaklı çelik boru (S235jr (St37) kalite) (TS EN 10217-1) (bina içinde kaynaklı döşenmiş boru montaj malzemesi bedeli dahil)",
+          "birim": "metre",
+          "metraj": 8.0,
+          "fiyat": 25000.0,
+          "toplam": 200000.0
+        },
+        {
+          "poz_no": "MEK.006",
+          "ad": "Çapı 200 mm, flanşlı her çeşit boru ve bağlantı elemanı başlarının bağlanması (Boru ve bağlantı elemanı bedelleri hariç, bulon, conta bedeli dahil))",
+          "birim": "adet",
+          "metraj": 3.0,
+          "fiyat": 3500.0,
+          "toplam": 10500.0
+        },
+        {
+          "poz_no": "MEK.007",
+          "ad": "Çapı 400 mm, flanşlı her çeşit boru ve bağlantı elemanı başlarının bağlanması (Boru ve bağlantı elemanı bedelleri hariç, bulon, conta bedeli dahil))",
+          "birim": "adet",
+          "metraj": 12.0,
+          "fiyat": 7000.0,
+          "toplam": 84000.0
+        },
+        {
+          "poz_no": "MEK.008",
+          "ad": "Çapı 1000 mm, flanşlı her çeşit boru ve bağlantı elemanı başlarının bağlanması (Boru ve bağlantı elemanı bedelleri hariç, bulon, conta bedeli dahil))",
+          "birim": "adet",
+          "metraj": 2.0,
+          "fiyat": 25000.0,
+          "toplam": 50000.0
+        },
+        {
+          "poz_no": "MEK.009",
+          "ad": "Çapı 100 mm, 10 atü, çelik boru başları için, St 44 kalite çelik flanşın kaynakla eklenmesi",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 1250.0,
+          "toplam": 1250.0
+        },
+        {
+          "poz_no": "MEK.010",
+          "ad": "Çapı 200 mm, 10 atü, çelik boru başları için, St 44 kalite çelik flanşın kaynakla eklenmesi",
+          "birim": "adet",
+          "metraj": 2.0,
+          "fiyat": 1500.0,
+          "toplam": 3000.0
+        },
+        {
+          "poz_no": "MEK.011",
+          "ad": "Çapı 400 mm, 10 atü, çelik boru başları için, St 44 kalite çelik flanşın kaynakla eklenmesi",
+          "birim": "adet",
+          "metraj": 12.0,
+          "fiyat": 5000.0,
+          "toplam": 60000.0
+        },
+        {
+          "poz_no": "MEK.012",
+          "ad": "Çapı 1000 mm, 10 atü, çelik boru başları için, St 44 kalite çelik flanşın kaynakla eklenmesi",
+          "birim": "adet",
+          "metraj": 2.0,
+          "fiyat": 27000.0,
+          "toplam": 54000.0
+        },
+        {
+          "poz_no": "MEK.013",
+          "ad": "Çapı 200 mm, 10 - 16 atü, sürgülü vana yerleştirilmesi (Sfero döküm, vana bedeli dahil, baş bağlama bedeli hariç)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 25000.0,
+          "toplam": 25000.0
+        },
+        {
+          "poz_no": "MEK.014",
+          "ad": "Çapı 400 mm, 10 - 16 atü, motor kumandalı, kelebek vana yerleştirilmesi (Sfero döküm, vana bedeli dahil, baş bağlama bedeli hariç)",
+          "birim": "adet",
+          "metraj": 8.0,
+          "fiyat": 95000.0,
+          "toplam": 760000.0
+        },
+        {
+          "poz_no": "MEK.015",
+          "ad": "Çapı 1000 mm elektromanyetik tip debi ölçüm seti yerleştirilmesi (Baş bağlama bedeli hariç) ( 1000 mm Olacak)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 125000.0,
+          "toplam": 125000.0
+        },
+        {
+          "poz_no": "MEK.016",
+          "ad": "Çapı 100 mm, 10 - 16 Atü, darbesiz dinamik vantuz yerleştirilmesi (Şebeke hatları için, sfero döküm, vantuz bedeli dahil, baş bağlama bedeli hariç)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 45000.0,
+          "toplam": 45000.0
+        },
+        {
+          "poz_no": "MEK.017",
+          "ad": "Çapı 400 mm, 10 - 16 atü, tevkif klapesi (Çekvalf) yerleştirilmesi (Sfero döküm, klape bedeli dahil, baş bağlama bedeli hariç)",
+          "birim": "adet",
+          "metraj": 4.0,
+          "fiyat": 110000.0,
+          "toplam": 440000.0
+        },
+        {
+          "poz_no": "MEK.018",
+          "ad": "Çapı 400 mm, 10 atü, flanşlı takma-sökme (Montaj-demontaj) parçasının yerleştirilmesi (Flanşlı takma-sökme parçası bedeli dahil, baş bağlama bedeli hariç)",
+          "birim": "adet",
+          "metraj": 8.0,
+          "fiyat": 85000.0,
+          "toplam": 680000.0
+        },
+        {
+          "poz_no": "MEK.019",
+          "ad": "10,00 m kaldırma yüksekliğinde 5 ton kaldırma kapasiteli motor kumandalı monoray vinç yerleştirilmesi (Vinç bedeli dahil)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 250000.0,
+          "toplam": 250000.0
+        },
+        {
+          "poz_no": "MEK.020",
+          "ad": "Pompa Terfi Hatlarında Çelik Özel Parçalarının İmal ve İhzarı",
+          "birim": "kilogram",
+          "metraj": 300.0,
+          "fiyat": 300.0,
+          "toplam": 90000.0
+        },
+        {
+          "poz_no": "MEK.021",
+          "ad": "Pompa terfi hatlarında her çap ve et kalınlığında vana,mekanik teçhizat , çelik boru ve özel parçalarının demontajı",
+          "birim": "kilogram",
+          "metraj": 300.0,
+          "fiyat": 350.0,
+          "toplam": 105000.0
+        },
+        {
+          "poz_no": "MEK.022",
+          "ad": "Her türlü demir kapak, kapak kaldırma tertibatı ve sızdırmazlık (Radyel kapaklar hariç)",
+          "birim": "kilogram",
+          "metraj": 200.0,
+          "fiyat": 400.0,
+          "toplam": 80000.0
+        },
+        {
+          "poz_no": "MEK.023",
+          "ad": "Q=337lt/sn, Hm=11,78metre, Düşey Milli Pompaların yerine konulması, çalışır halde teslimi",
+          "birim": "adet",
+          "metraj": 4.0,
+          "fiyat": 1880000.0,
+          "toplam": 7520000.0
+        },
+        {
+          "poz_no": "ELK.001",
+          "ad": "En ölçüsü en az 800 mm, derinlik en az 500 mm olan galvanizli dikili tip sac pano (1. pano)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 35000.0,
+          "toplam": 35000.0
+        },
+        {
+          "poz_no": "ELK.002",
+          "ad": "En ölçüsü en az 800 mm olan galvanizli ilave dikili tip sac pano.",
+          "birim": "adet",
+          "metraj": 6.0,
+          "fiyat": 9500.0,
+          "toplam": 57000.0
+        },
+        {
+          "poz_no": "ELK.003",
+          "ad": "Döküm kutu içine ve panolara konulacak TSE şartlarına uygun bakır bara temin ve montajı ve TS EN 60445'deki renklere boyanması",
+          "birim": "kilogram",
+          "metraj": 100.0,
+          "fiyat": 680.0,
+          "toplam": 68000.0
+        },
+        {
+          "poz_no": "ELK.004",
+          "ad": "16 A.'e kadar anahtarlı otomatik sigorta (en az 10kA)",
+          "birim": "adet",
+          "metraj": 10.0,
+          "fiyat": 400.0,
+          "toplam": 4000.0
+        },
+        {
+          "poz_no": "ELK.005",
+          "ad": "25 A.'e kadar anahtarlı otomatik sigorta (en az 10kA)",
+          "birim": "adet",
+          "metraj": 10.0,
+          "fiyat": 500.0,
+          "toplam": 5000.0
+        },
+        {
+          "poz_no": "ELK.006",
+          "ad": "40 A.'e kadar anahtarlı otomatik sigorta (en az 10kA)",
+          "birim": "adet",
+          "metraj": 10.0,
+          "fiyat": 800.0,
+          "toplam": 8000.0
+        },
+        {
+          "poz_no": "ELK.007",
+          "ad": "Üç fazlı 25 A'e kadar anahtarlı otomatik sigorta (en az 10kA)",
+          "birim": "adet",
+          "metraj": 35.0,
+          "fiyat": 650.0,
+          "toplam": 22750.0
+        },
+        {
+          "poz_no": "ELK.008",
+          "ad": "Üç fazlı 40 A'e kadar anahtarlı otomatik sigorta (en az 10kA)",
+          "birim": "adet",
+          "metraj": 35.0,
+          "fiyat": 800.0,
+          "toplam": 28000.0
+        },
+        {
+          "poz_no": "ELK.009",
+          "ad": "Üç fazlı 63 A'e kadar anahtarlı otomatik sigorta (en az 10kA)",
+          "birim": "adet",
+          "metraj": 20.0,
+          "fiyat": 900.0,
+          "toplam": 18000.0
+        },
+        {
+          "poz_no": "ELK.010",
+          "ad": "Üç fazlı nötr kesmeli 16 A'e kadar anahtarlı otomatik sigorta (en az 10kA)",
+          "birim": "adet",
+          "metraj": 5.0,
+          "fiyat": 800.0,
+          "toplam": 4000.0
+        },
+        {
+          "poz_no": "ELK.011",
+          "ad": "3 x 200A'e kadar, Icu: 65 kA, I1: (0,8-1)In, termik koruma ayarlı, manyetik koruma sabit",
+          "birim": "adet",
+          "metraj": 7.0,
+          "fiyat": 7500.0,
+          "toplam": 52500.0
+        },
+        {
+          "poz_no": "ELK.012",
+          "ad": "3 x 800A'e kadar, Icu: 65 kA, I1: (0,8-1)In, I3: (6-10)In, termik koruma ayarlı, manyetik koruma ayarlı",
+          "birim": "adet",
+          "metraj": 4.0,
+          "fiyat": 12500.0,
+          "toplam": 50000.0
+        },
+        {
+          "poz_no": "ELK.013",
+          "ad": "En fazla 3 x 250 A, 3 kutuplu, 400 V AC'de en az Icu: 25 kA, Kompakt sabit tip termik ve manyetik koruyuculu şalter",
+          "birim": "adet",
+          "metraj": 5.0,
+          "fiyat": 1500.0,
+          "toplam": 7500.0
+        },
+        {
+          "poz_no": "ELK.014",
+          "ad": "Kaçak akım koruma şalteri 4*40 a.e kadar(30ma) (Koruma Sınıfı: AC)",
+          "birim": "adet",
+          "metraj": 6.0,
+          "fiyat": 1250.0,
+          "toplam": 7500.0
+        },
+        {
+          "poz_no": "ELK.015",
+          "ad": "Kaçak akım koruma şalteri 4*40 a.e kadar(300ma) (Koruma Sınıfı: AC)",
+          "birim": "adet",
+          "metraj": 5.0,
+          "fiyat": 1250.0,
+          "toplam": 6250.0
+        },
+        {
+          "poz_no": "ELK.016",
+          "ad": "Kaçak akım koruma şalteri 4*100 a.e kadar(300ma) (Koruma Sınıfı: AC)",
+          "birim": "adet",
+          "metraj": 5.0,
+          "fiyat": 1250.0,
+          "toplam": 6250.0
+        },
+        {
+          "poz_no": "ELK.017",
+          "ad": "3 x 80 A’ den 3 x 250 A. e kadar (Trifaze) 30-500 mA Toroidal Akım Trafolu Kaçak Akım Koruma Rölesi",
+          "birim": "adet",
+          "metraj": 5.0,
+          "fiyat": 1250.0,
+          "toplam": 6250.0
+        },
+        {
+          "poz_no": "ELK.018",
+          "ad": "3 x 300 A’den 3 x1250 A. e kadar (Trifaze) 30-500 mA Toroidal Akım Trafolu Kaçak Akım Koruma Rölesi",
+          "birim": "adet",
+          "metraj": 6.0,
+          "fiyat": 1250.0,
+          "toplam": 7500.0
+        },
+        {
+          "poz_no": "ELK.019",
+          "ad": "3P 40 kA (I max; 8/20µs) Tip 2 (C sınıfı) Alçak Gerilim Parafudr",
+          "birim": "adet",
+          "metraj": 5.0,
+          "fiyat": 1250.0,
+          "toplam": 6250.0
+        },
+        {
+          "poz_no": "ELK.020",
+          "ad": "İşaret lambası 250 v.a kadar",
+          "birim": "adet",
+          "metraj": 80.0,
+          "fiyat": 350.0,
+          "toplam": 28000.0
+        },
+        {
+          "poz_no": "ELK.021",
+          "ad": "Elektronik motor koruma cihazı 3*12 a.",
+          "birim": "adet",
+          "metraj": 5.0,
+          "fiyat": 4500.0,
+          "toplam": 22500.0
+        },
+        {
+          "poz_no": "ELK.022",
+          "ad": "3 Faz akım (A) ve 3 faz gerilimi (V) ölçen multimetre",
+          "birim": "adet",
+          "metraj": 15.0,
+          "fiyat": 1500.0,
+          "toplam": 22500.0
+        },
+        {
+          "poz_no": "ELK.023",
+          "ad": "Akım ölçü trafosu 100 - 500/5 a.",
+          "birim": "adet",
+          "metraj": 50.0,
+          "fiyat": 1700.0,
+          "toplam": 85000.0
+        },
+        {
+          "poz_no": "ELK.024",
+          "ad": "Enerji analizörü (TS IEC 61554'e uygun)",
+          "birim": "adet",
+          "metraj": 7.0,
+          "fiyat": 6500.0,
+          "toplam": 45500.0
+        },
+        {
+          "poz_no": "ELK.025",
+          "ad": "3x35 + 16 mm2 YVV (NYY) tipi 1 KV yeraltı kabloları ile kolon ve besleme hattı tesisi",
+          "birim": "metre",
+          "metraj": 150.0,
+          "fiyat": 110.0,
+          "toplam": 16500.0
+        },
+        {
+          "poz_no": "ELK.026",
+          "ad": "3x2.5 mm2 N2XH tipi 1KV yer altı kabloları ile kolon ve besleme hattı tesisi",
+          "birim": "metre",
+          "metraj": 300.0,
+          "fiyat": 250.0,
+          "toplam": 75000.0
+        },
+        {
+          "poz_no": "ELK.027",
+          "ad": "5x6 mm2 N2XH tipi 1KV yer altı kabloları ile kolon ve besleme hattı tesisi",
+          "birim": "metre",
+          "metraj": 150.0,
+          "fiyat": 350.0,
+          "toplam": 52500.0
+        },
+        {
+          "poz_no": "ELK.028",
+          "ad": "Komütatör sorti (Linye hattı PVC boru içerisinde plastik izoleli iletkenler, sorti hatları kurşunsuz, antigron, (NVV), (NYM) nevinden malzeme ile) (Etanj Aydınlatma Sortisi) (Güvenlik hatlı)",
+          "birim": "adet",
+          "metraj": 6.0,
+          "fiyat": 2500.0,
+          "toplam": 15000.0
+        },
+        {
+          "poz_no": "ELK.029",
+          "ad": "Paralel sorti (Linye hattı PVC boru içerisinde plastik izoleli iletkenler, sorti hatları kurşunsuz, antigron, (NVV), (NYM) nevinden malzeme ile) (Etanj Aydınlatma Sortisi) (Güvenlik hatlı)",
+          "birim": "adet",
+          "metraj": 6.0,
+          "fiyat": 2500.0,
+          "toplam": 15000.0
+        },
+        {
+          "poz_no": "ELK.030",
+          "ad": "Güvenlik hatlı priz sortisi",
+          "birim": "adet",
+          "metraj": 10.0,
+          "fiyat": 1500.0,
+          "toplam": 15000.0
+        },
+        {
+          "poz_no": "ELK.031",
+          "ad": "2 kutuplu (1na+1nk kontak) , Ø 40 mm mantar kafalı acil durdurma (acil stop) butonu",
+          "birim": "adet",
+          "metraj": 15.0,
+          "fiyat": 500.0,
+          "toplam": 7500.0
+        },
+        {
+          "poz_no": "ELK.032",
+          "ad": "Bakalitten 3 fazlı fiş priz ve montajı 3*25 a.",
+          "birim": "adet",
+          "metraj": 6.0,
+          "fiyat": 500.0,
+          "toplam": 3000.0
+        },
+        {
+          "poz_no": "ELK.033",
+          "ad": "Kablo tava sistemleri",
+          "birim": "kilogram",
+          "metraj": 250.0,
+          "fiyat": 200.0,
+          "toplam": 50000.0
+        },
+        {
+          "poz_no": "ELK.034",
+          "ad": "Toprak elektrodu (çubuk) elektrolitik bakır",
+          "birim": "metre",
+          "metraj": 2.0,
+          "fiyat": 500.0,
+          "toplam": 1000.0
+        },
+        {
+          "poz_no": "ELK.035",
+          "ad": "55 kW Frekans konvertörünün (Üç faz) yerleştirilmesi (Frekans konvertör bedeli dahil)",
+          "birim": "adet",
+          "metraj": 4.0,
+          "fiyat": 5000.0,
+          "toplam": 20000.0
+        },
+        {
+          "poz_no": "ELK.036",
+          "ad": "Şehir içi AG ve OG Müşterek Şebeke Direkleri için (Parçalı Kaynaklı Galvanizli Demir Direk Travers ve Konsollar)(Malzeme ve Montaj Bedeli)",
+          "birim": "kilogram",
+          "metraj": 500.0,
+          "fiyat": 150.0,
+          "toplam": 75000.0
+        },
+        {
+          "poz_no": "ELK.037",
+          "ad": "36 kV 10 KA Metal Oksit (ZNO) Parafudr(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 3.0,
+          "fiyat": 3500.0,
+          "toplam": 10500.0
+        },
+        {
+          "poz_no": "ELK.038",
+          "ad": "İzole Eldiven 36 kV için (Bir Çift) (Malzeme Bedeli)",
+          "birim": "çift",
+          "metraj": 1.0,
+          "fiyat": 22300.0,
+          "toplam": 22300.0
+        },
+        {
+          "poz_no": "ELK.039",
+          "ad": "İzole Halı 36 kV için (Malzeme Bedeli)",
+          "birim": "metrekare",
+          "metraj": 20.0,
+          "fiyat": 2500.0,
+          "toplam": 50000.0
+        },
+        {
+          "poz_no": "ELK.040",
+          "ad": "İzole Sehpa 36 kV için (Malzeme Bedeli)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 5000.0,
+          "toplam": 5000.0
+        },
+        {
+          "poz_no": "ELK.041",
+          "ad": "TİP-1C (DONANIMSIZ) Tip-1 Tek Parçalı, Hava Veya Gaz Yalıtımlı İçeriden İşletilen Tip Kompakt Merkez (Max.1600 Kva) (Beton Mahfazalı YG/AG Dağıtım Transfor. Merk.)(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 2.0,
+          "fiyat": 20000.0,
+          "toplam": 40000.0
+        },
+        {
+          "poz_no": "ELK.042",
+          "ad": "36 kV, 630 A, 16 KA Yük Ayırıcılı Giriş-Çıkış Fonksiyonel Birimi (YG Hava Yalıtımlı Metal Mahfazalı)(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 2650.0,
+          "toplam": 2650.0
+        },
+        {
+          "poz_no": "ELK.043",
+          "ad": "36 kV, 200 A, 16 kA Yük Ayırıcı + Sigorta Birleşiği Transformatör Koruma Fonksiyonel Birimi (YG Hava Yalıtımlı Metal Mahfazalı)(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 2500.0,
+          "toplam": 2500.0
+        },
+        {
+          "poz_no": "ELK.044",
+          "ad": "36 kV 630 A 12.5 KA Harici Tip Sigortalı Topraklamalı Ayırıcılar (Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 2500.0,
+          "toplam": 2500.0
+        },
+        {
+          "poz_no": "ELK.045",
+          "ad": "36 kV 2-20 A L=635 mm 0=45 mm Dahili ve Harici Tip Og Sigorta Patronları (Malzeme Bedeli)",
+          "birim": "adet",
+          "metraj": 3.0,
+          "fiyat": 2000.0,
+          "toplam": 6000.0
+        },
+        {
+          "poz_no": "ELK.046",
+          "ad": "400 KVA .33 (28.5 - 34.5 kV) / 0.4 - 0.231 kV (Bakır sargılı) Hermetik (Tam Kapalı) Tip Transformatörler(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 2000.0,
+          "toplam": 2000.0
+        },
+        {
+          "poz_no": "ELK.047",
+          "ad": "24 V 25 A 40 Ah Akü-Redresör Grubu(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 2000.0,
+          "toplam": 2000.0
+        },
+        {
+          "poz_no": "ELK.048",
+          "ad": "400 kVA TMK ile Ana Giriş Dahili Tip A.G. Panosu - Sokak Aydınlatma Çıkışlı (DSYA Besleme Çıkışlı)(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 1.0,
+          "fiyat": 1832.8,
+          "toplam": 1832.8
+        },
+        {
+          "poz_no": "ELK.049",
+          "ad": "50 mm2 NYY Kablo ve Gömülmesi (Topraklama İletkenleri)(Malzeme ve Montaj Bedeli)",
+          "birim": "metre",
+          "metraj": 100.0,
+          "fiyat": 900.0,
+          "toplam": 90000.0
+        },
+        {
+          "poz_no": "ELK.050",
+          "ad": "50 mm2 (462.06 Kg/Km) Bakır İletken ve Gömülmesi (Topraklama İletkenleri)(Malzeme ve Montaj Bedeli)",
+          "birim": "metre",
+          "metraj": 100.0,
+          "fiyat": 950.0,
+          "toplam": 95000.0
+        },
+        {
+          "poz_no": "ELK.051",
+          "ad": "95 mm2 Galvanizli Örgülü Çelik İletken (Topraklama İletkenleri)(Malzeme ve Montaj Bedeli)",
+          "birim": "metre",
+          "metraj": 150.0,
+          "fiyat": 1000.0,
+          "toplam": 150000.0
+        },
+        {
+          "poz_no": "ELK.052",
+          "ad": "2 m Uzunluğunda Galvanizli 65 X 65 X 7 Köşebent Topraklama Elektrodu (Topraklama Kazığı)(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 6.0,
+          "fiyat": 12500.0,
+          "toplam": 75000.0
+        },
+        {
+          "poz_no": "ELK.053",
+          "ad": "1 X 95ş mm^2 . 0.6/1 kV YXV (N2XY) XLPE Yalıtkanlı Kablo (XLPE Yalıtkanlı, Pvc Dış Kılıflı) (AG)(Malzeme ve Montaj Bedeli)",
+          "birim": "metre",
+          "metraj": 120.0,
+          "fiyat": 1000.0,
+          "toplam": 120000.0
+        },
+        {
+          "poz_no": "ELK.054",
+          "ad": "1 X 185ş mm^2 . 0.6/1 kV YXV (N2XY) XLPE Yalıtkanlı Kablo (XLPE Yalıtkanlı, Pvc Dış Kılıflı) (AG)(Malzeme ve Montaj Bedeli)",
+          "birim": "metre",
+          "metraj": 150.0,
+          "fiyat": 1100.0,
+          "toplam": 165000.0
+        },
+        {
+          "poz_no": "ELK.055",
+          "ad": "1 X 95 / 16 mm^2 19/33 (36) kV Dahili Tip Bakır Kablo Başlığı (Isı Büzüşmeli) (OG)(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 6.0,
+          "fiyat": 1700.0,
+          "toplam": 10200.0
+        },
+        {
+          "poz_no": "ELK.056",
+          "ad": "1 X 95 / 16 mm^2 19/33 (36) kV Dahili Tip Bakır Kablo Başlığı (Sıkı Geçme) (OG)(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 3.0,
+          "fiyat": 1800.0,
+          "toplam": 5400.0
+        },
+        {
+          "poz_no": "ELK.057",
+          "ad": "1 X 95 / 16 mm^2 19/33 (36) kV Harici Tip Bakır Kablo Başlığı (Isı Büzüşmeli) (OG)(Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 3.0,
+          "fiyat": 1800.0,
+          "toplam": 5400.0
+        },
+        {
+          "poz_no": "ELK.058",
+          "ad": "185 mm^2 Sıkmalı Tip Bakır Kablo Pabuçları (Malzeme ve Montaj Bedeli)",
+          "birim": "adet",
+          "metraj": 12.0,
+          "fiyat": 500.0,
+          "toplam": 6000.0
+        }
+      ],
+      "metraj": [
+        {
+          "id": 2,
+          "tarih": "2026-07-08",
+          "poz_no": "TİGH.012",
+          "miktar": 860.0,
+          "imalat_yeri": "YOL-1",
+          "aciklama": "",
+          "hakedis_no": ""
+        },
+        {
+          "id": 3,
+          "tarih": "2026-07-08",
+          "poz_no": "TİGH.013",
+          "miktar": 1376.0,
+          "imalat_yeri": "YOL-1",
+          "aciklama": "",
+          "hakedis_no": ""
+        },
+        {
+          "id": 4,
+          "tarih": "2026-07-08",
+          "poz_no": "TİGH.009",
+          "miktar": 1.0,
+          "imalat_yeri": "YOL-1",
+          "aciklama": "",
+          "hakedis_no": ""
+        }
+      ],
+      "hakedis": [
+        {
+          "no": 1,
+          "tarih": "2026-07-01",
+          "kesin": false,
+          "onceki_no": "",
+          "metraj_ids": [],
+          "rows": [],
+          "toplam_sozlesme_tutari": 0,
+          "onceki_sozlesme_tutari": 0,
+          "sozlesme_tutari": 0,
+          "fiyat_farki": 0.0,
+          "fiyat_farki_detay": [],
+          "fiyat_farki_hata": "",
+          "toplam_bu_hakedis": 0.0,
+          "tahakkuk_kdv_dahil": 0.0
+        }
+      ],
+      "locations": [
+        "YOL-1"
+      ],
+      "fiyat_farki": {
+        "base_date": "2025-05-20",
+        "b_sabiti": 0.9,
+        "rows": [
+          {
+            "code": "TUFE_GENEL_A",
+            "katsayi": 0.356232,
+            "aciklama": "Türkiye İstatistik Kurumu tarafından aylık yayımlanan Tüketici Fiyat Endeksi (2003=100) Harcama Gruplarına Göre Endeks Sayıları Tablosunun \"Genel\" sütunundaki sayı",
+            "baz": 4230.69
+          },
+          {
+            "code": "CIMENTO",
+            "katsayi": 0.003472,
+            "aciklama": "Endeks tablosunun 23.5 numaralı \"Çimento, Kireç ve Alçı\" sütunundaki sayı",
+            "baz": 4720.34
+          },
+          {
+            "code": "BETON_ESYA",
+            "katsayi": 0.046806,
+            "aciklama": "Endeks tablosunun 23.6 numaralı \"Betondan, çimentodan ve alçıdan eşyalar\" sütunundaki sayı",
+            "baz": 4873.81
+          },
+          {
+            "code": "ANA_METAL",
+            "katsayi": 0.015574,
+            "aciklama": "Endeks tablosunun 24 numaralı \"Ana Metaller\" sütunundaki sayı",
+            "baz": 5882.18
+          },
+          {
+            "code": "DEMIR_CELIK",
+            "katsayi": 0.041058,
+            "aciklama": "Endeks tablosunun 24.1 numaralı \"Ana demir-çelik ve ferro alaşımlar\" sütunundaki sayı",
+            "baz": 5256.64
+          },
+          {
+            "code": "BORU_PROFIL",
+            "katsayi": 0.002664,
+            "aciklama": "Endeks tablosunun 24.2 numaralı \"Tüp, boru, içi boş profil ve ilgili bağlantı parçaları, çelikten\" sütunundaki sayı",
+            "baz": 4048.85
+          },
+          {
+            "code": "MOTORIN",
+            "katsayi": 0.0917,
+            "aciklama": "Motorin",
+            "baz": 46.07125
+          },
+          {
+            "code": "KERSTE",
+            "katsayi": 0.006338,
+            "aciklama": "Endeks tablosunun 16.1 numaralı \"Kereste, Biçilmiş ve Planyalanmış\" sütunundaki sayı",
+            "baz": 3144.23
+          },
+          {
+            "code": "TUFE_GENEL_B",
+            "katsayi": 0.296964,
+            "aciklama": "Endeks tablosunun \"Genel\" sütunundaki sayı",
+            "baz": 4230.69
+          },
+          {
+            "code": "MAKINE_EKIPMAN",
+            "katsayi": 0.004225,
+            "aciklama": "Endeks tablosunun 28 numaralı \"Makine ve ekipmanlar b.y.s.\" sütunundaki sayı",
+            "baz": 3068.3
+          },
+          {
+            "code": "GENEL_AMACLI_MAKINE",
+            "katsayi": 0.007627,
+            "aciklama": "Endeks tablosunun 28.1 numaralı \"Genel amaçlı makineler\" sütunundaki sayı",
+            "baz": 2867.08
+          },
+          {
+            "code": "DIGER_GENEL_AMACLI",
+            "katsayi": 0.003792,
+            "aciklama": "Endeks tablosunun 28.2 numaralı \"Diğer Genel Amaçlı Makineler\" sütunundaki sayı",
+            "baz": 3118.65
+          },
+          {
+            "code": "OZEL_AMACLI_MAKINE",
+            "katsayi": 0.123548,
+            "aciklama": "Endeks tablosunun 28.9 numaralı \"Diğer Özel Amaçlı Makineler\" sütunundaki sayı",
+            "baz": 2235.17
+          }
+        ],
+        "monthly_values": {
+          "2026-02": {
+            "TUFE_GENEL_A": 5029.76,
+            "CIMENTO": 5504.73,
+            "BETON_ESYA": 5582.27,
+            "ANA_METAL": 6805.63,
+            "DEMIR_CELIK": 5828.36,
+            "BORU_PROFIL": 4513.38,
+            "MOTORIN": 58.16996,
+            "KERSTE": 3791.65,
+            "TUFE_GENEL_B": 5029.76,
+            "MAKINE_EKIPMAN": 3708.22,
+            "GENEL_AMACLI_MAKINE": 3516.4,
+            "DIGER_GENEL_AMACLI": 3725.51,
+            "OZEL_AMACLI_MAKINE": 2664.71
+          },
+          "2026-01": {
+            "TUFE_GENEL_A": 4910.53,
+            "CIMENTO": 5457.27,
+            "BETON_ESYA": 5444.52,
+            "ANA_METAL": 6710.15,
+            "DEMIR_CELIK": 5761.85,
+            "BORU_PROFIL": 4437.79,
+            "KERSTE": 3665.77,
+            "TUFE_GENEL_B": 4910.53,
+            "MAKINE_EKIPMAN": 3624.85,
+            "GENEL_AMACLI_MAKINE": 3405.99,
+            "DIGER_GENEL_AMACLI": 3646.65,
+            "OZEL_AMACLI_MAKINE": 2621.7,
+            "MOTORIN": 55.39538
+          },
+          "2026-03": {
+            "TUFE_GENEL_A": 5145.36,
+            "TUFE_GENEL_B": 5145.36,
+            "CIMENTO": 5542.97,
+            "BETON_ESYA": 5686.34,
+            "ANA_METAL": 6960.9,
+            "DEMIR_CELIK": 5954.83,
+            "BORU_PROFIL": 4748.59,
+            "KERSTE": 3851.4,
+            "MAKINE_EKIPMAN": 3726.74,
+            "GENEL_AMACLI_MAKINE": 3561.34,
+            "DIGER_GENEL_AMACLI": 3719.92,
+            "OZEL_AMACLI_MAKINE": 2676.9,
+            "MOTORIN": 67.59652
+          },
+          "2026-04": {
+            "TUFE_GENEL_A": 5308.46,
+            "CIMENTO": 5666.37,
+            "BETON_ESYA": 5801.52,
+            "ANA_METAL": 7209.79,
+            "DEMIR_CELIK": 6162.69,
+            "BORU_PROFIL": 4893.03,
+            "KERSTE": 3951.98,
+            "TUFE_GENEL_B": 5308.46,
+            "MAKINE_EKIPMAN": 3813.11,
+            "GENEL_AMACLI_MAKINE": 3641.35,
+            "DIGER_GENEL_AMACLI": 3850.38,
+            "OZEL_AMACLI_MAKINE": 2716.02,
+            "MOTORIN": 74.17242
+          },
+          "2026-05": {
+            "TUFE_GENEL_A": 5454.58,
+            "CIMENTO": 5831.89,
+            "BETON_ESYA": 5922.2,
+            "ANA_METAL": 7364.5,
+            "DEMIR_CELIK": 6249.34,
+            "BORU_PROFIL": 5061.15,
+            "KERSTE": 4053.97,
+            "TUFE_GENEL_B": 5454.58,
+            "MAKINE_EKIPMAN": 3857.2,
+            "GENEL_AMACLI_MAKINE": 3691.41,
+            "DIGER_GENEL_AMACLI": 3898.16,
+            "OZEL_AMACLI_MAKINE": 2732.75,
+            "MOTORIN": 68.33556
+          }
+        }
+      },
+      "is_programi": {
+        "start_date": "2026-01-01",
+        "end_date": "2027-12-21",
+        "extension_days": 0,
+        "allocations": {
+          "2026-01": 90000.0,
+          "2026-02": 74000.0,
+          "2026-03": 90000.0,
+          "2026-04": 20000000.0,
+          "2026-05": 25000000.0,
+          "2026-06": 6000000.0,
+          "2026-07": 6000000.0,
+          "2026-08": 6000000.0,
+          "2026-09": 6000000.0
+        }
+      }
+    }
+  ]
+}

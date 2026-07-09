@@ -4,6 +4,8 @@ export type AppUser = {
   title: string;
   canEdit: boolean;
   canExport: boolean;
+  canManageUsers: boolean;
+  projectIds: string[];
 };
 
 export function getAppUser(email?: string | null, fallbackName = "Kullanici"): AppUser {
@@ -15,7 +17,9 @@ export function getAppUser(email?: string | null, fallbackName = "Kullanici"): A
       name: "Muhammed Karaman",
       title: "Santiye Sefi",
       canEdit: true,
-      canExport: true
+      canExport: true,
+      canManageUsers: true,
+      projectIds: ["dim-baraji", "aksu-tigh"]
     };
   }
 
@@ -25,7 +29,9 @@ export function getAppUser(email?: string | null, fallbackName = "Kullanici"): A
       name: "Aydin Akgun",
       title: "Proje Muduru",
       canEdit: true,
-      canExport: true
+      canExport: true,
+      canManageUsers: false,
+      projectIds: ["dim-baraji", "aksu-tigh"]
     };
   }
 
@@ -35,7 +41,9 @@ export function getAppUser(email?: string | null, fallbackName = "Kullanici"): A
       name: "Bouth",
       title: "Goruntuleme",
       canEdit: false,
-      canExport: true
+      canExport: true,
+      canManageUsers: false,
+      projectIds: ["dim-baraji"]
     };
   }
 
@@ -44,6 +52,12 @@ export function getAppUser(email?: string | null, fallbackName = "Kullanici"): A
     name: fallbackName,
     title: "Goruntuleme",
     canEdit: false,
-    canExport: true
+    canExport: true,
+    canManageUsers: false,
+    projectIds: ["dim-baraji"]
   };
+}
+
+export function canAccessProject(user: AppUser | null, projectId: string) {
+  return Boolean(user?.projectIds.includes(projectId));
 }
