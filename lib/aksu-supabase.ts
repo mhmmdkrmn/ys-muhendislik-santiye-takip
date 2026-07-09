@@ -49,12 +49,27 @@ type HakedisRow = {
   tahakkuk_kdv_dahil: number;
 };
 
+const sourcePozMap = new Map((getAksuProject().kesif ?? []).map((poz) => [poz.poz_no, poz]));
+
+function looksCorrupted(value: string) {
+  return /[ÃÄÅ�]/.test(value) || /[A-Za-zÇĞİÖŞÜçğıöşü]\?[A-Za-zÇĞİÖŞÜçğıöşü]/.test(value);
+}
+
+function cleanStoredText(value: string, fallback?: string) {
+  if (looksCorrupted(value) && fallback) {
+    return fallback;
+  }
+  return repairText(value);
+}
+
 function fromPozRow(row: PozRow): AksuPoz {
+  const source = sourcePozMap.get(row.poz_no);
+
   return {
     id: row.id,
     poz_no: row.poz_no,
-    ad: repairText(row.ad),
-    birim: repairText(row.birim),
+    ad: cleanStoredText(row.ad, source?.ad),
+    birim: cleanStoredText(row.birim, source?.birim),
     metraj: Number(row.metraj ?? 0),
     fiyat: Number(row.fiyat ?? 0),
     toplam: Number(row.toplam ?? 0)
