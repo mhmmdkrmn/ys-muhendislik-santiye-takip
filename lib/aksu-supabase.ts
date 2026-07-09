@@ -5,7 +5,8 @@ import {
   AksuMetraj,
   AksuPoz,
   AksuProject,
-  getAksuProject
+  getAksuProject,
+  repairText
 } from "@/lib/aksu-data";
 
 type PozRow = {
@@ -52,8 +53,8 @@ function fromPozRow(row: PozRow): AksuPoz {
   return {
     id: row.id,
     poz_no: row.poz_no,
-    ad: row.ad,
-    birim: row.birim,
+    ad: repairText(row.ad),
+    birim: repairText(row.birim),
     metraj: Number(row.metraj ?? 0),
     fiyat: Number(row.fiyat ?? 0),
     toplam: Number(row.toplam ?? 0)
@@ -79,10 +80,10 @@ function fromMetrajRow(row: MetrajRow): AksuMetraj {
     tarih: row.tarih,
     poz_no: row.poz_no,
     miktar: Number(row.miktar ?? 0),
-    birim: row.birim ?? "",
+    birim: row.birim ? repairText(row.birim) : "",
     tutar: Number(row.tutar ?? 0),
-    imalat_yeri: row.imalat_yeri ?? "",
-    aciklama: row.aciklama ?? "",
+    imalat_yeri: row.imalat_yeri ? repairText(row.imalat_yeri) : "",
+    aciklama: row.aciklama ? repairText(row.aciklama) : "",
     hakedis_no: row.hakedis_no ?? ""
   };
 }
@@ -235,4 +236,3 @@ export async function seedAksuFromJson(supabase: SupabaseClient) {
     await upsertAksuHakedis(supabase, record);
   }
 }
-

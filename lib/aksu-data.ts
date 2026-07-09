@@ -73,6 +73,10 @@ export type AksuProject = {
 const project = (aksuData as { projects: AksuProject[] }).projects[0];
 
 export function repairText(value: string) {
+  if (!/[ÃÄÅ]/.test(value)) {
+    return value;
+  }
+
   try {
     const bytes = Uint8Array.from(value, (char) => char.charCodeAt(0));
     return new TextDecoder("utf-8").decode(bytes);

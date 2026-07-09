@@ -31,7 +31,7 @@ import { canAccessProject } from "@/lib/permissions";
 import { createSupabaseClient } from "@/lib/supabase";
 import { useCurrentUser } from "@/lib/use-current-user";
 
-const tabs = ["Genel", "Kesif", "Pozlar", "Metraj", "Metraj Icmali", "Raporlar", "Fiyat Farki", "Revize Fiyat", "Hakedis"];
+const tabs = ["Genel", "Keşif", "Pozlar", "Metraj", "Metraj İcmali", "Raporlar", "Fiyat Farkı", "Revize Fiyat", "Hakediş"];
 const blankPoz: AksuPoz = { poz_no: "", ad: "", birim: "", metraj: 0, fiyat: 0, toplam: 0 };
 const blankMetraj: AksuMetraj = {
   tarih: new Date().toISOString().slice(0, 10),
@@ -68,7 +68,7 @@ export default function AksuTighPage() {
 
   const loadProject = useCallback(async () => {
     if (!supabase) {
-      setError("Supabase baglantisi bulunamadi.");
+      setError("Supabase bağlantısı bulunamadı.");
       setDataLoading(false);
       return;
     }
@@ -77,7 +77,7 @@ export default function AksuTighPage() {
     try {
       setProject(await fetchAksuProject(supabase));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Aksu verileri okunamadi. Supabase SQL'i calistirilmis olmali.");
+      setError(err instanceof Error ? err.message : "Aksu verileri okunamadı. Supabase SQL'i çalıştırılmış olmalı.");
       setProject({ ...getAksuProject(), kesif: [], metraj: [], hakedis: [] });
     } finally {
       setDataLoading(false);
@@ -105,12 +105,12 @@ export default function AksuTighPage() {
       await loadProject();
       setMessage(success);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Islem tamamlanamadi.");
+      setError(err instanceof Error ? err.message : "İşlem tamamlanamadı.");
     }
   }
 
   async function handleSeed() {
-    await runAction(async () => seedAksuFromJson(supabase!), "Eski Aksu verileri Supabase'e aktarildi.");
+    await runAction(async () => seedAksuFromJson(supabase!), "Eski Aksu verileri Supabase'e aktarıldı.");
   }
 
   async function savePoz(event: FormEvent<HTMLFormElement>) {
@@ -148,11 +148,11 @@ export default function AksuTighPage() {
   }
 
   if (userLoading) {
-    return <Loading text="Aksu TIGH aciliyor..." />;
+    return <Loading text="Aksu TİGH açılıyor..." />;
   }
 
   if (!canAccessProject(user, "aksu-tigh")) {
-    return <Loading text="Bu projeye erisim yetkin yok." />;
+    return <Loading text="Bu projeye erişim yetkin yok." />;
   }
 
   return (
@@ -164,13 +164,13 @@ export default function AksuTighPage() {
               <HardHat size={21} />
             </span>
             <div>
-              <p className="font-semibold">Aksu TIGH 1. Kisim</p>
-              <p className="text-sm text-[#61706b]">{user?.name ?? "Kullanici"} - {user?.title ?? "Goruntuleme"}</p>
+              <p className="font-semibold">Aksu TİGH 1. Kısım</p>
+              <p className="text-sm text-[#61706b]">{user?.name ?? "Kullanıcı"} - {user?.title ?? "Görüntüleme"}</p>
             </div>
           </div>
           <button className="inline-flex items-center gap-2 rounded border border-[#c8c0b3] bg-white px-3 py-2 text-sm font-medium" onClick={logout} type="button">
             <LogOut size={16} />
-            Cikis
+            Çıkış
           </button>
         </div>
       </header>
@@ -178,7 +178,7 @@ export default function AksuTighPage() {
       <section className="mx-auto max-w-7xl px-5 py-8">
         <Link className="inline-flex items-center gap-2 text-sm font-medium text-[#61706b]" href="/panel">
           <ArrowLeft size={16} />
-          Proje secimine don
+          Proje seçimine dön
         </Link>
 
         <div className="mt-5 border-b border-[#d7d0c4] pb-5">
@@ -186,7 +186,7 @@ export default function AksuTighPage() {
             <ClipboardList size={17} />
             Aksu Metraj Takip
           </div>
-          <h1 className="mt-2 text-2xl font-semibold">Aksu TIGH 1. Kisim</h1>
+          <h1 className="mt-2 text-2xl font-semibold">Aksu TİGH 1. Kısım</h1>
           <p className="mt-2 text-sm leading-6 text-[#61706b]">{project.name}</p>
         </div>
 
@@ -201,11 +201,11 @@ export default function AksuTighPage() {
           ))}
         </div>
 
-        {dataLoading ? <div className="mt-5 rounded border border-[#d7d0c4] bg-white p-5 text-sm text-[#61706b]">Veriler yukleniyor...</div> : null}
+        {dataLoading ? <div className="mt-5 rounded border border-[#d7d0c4] bg-white p-5 text-sm text-[#61706b]">Veriler yükleniyor...</div> : null}
 
         {!dataLoading && (project.kesif?.length ?? 0) === 0 ? (
           <div className="mt-5 rounded border border-[#d7d0c4] bg-white p-5">
-            <h2 className="font-semibold">Aksu verileri henuz Supabase'te yok</h2>
+            <h2 className="font-semibold">Aksu verileri henüz Supabase'te yok</h2>
             <p className="mt-2 text-sm text-[#61706b]">Ilk kurulum icin eski Aksu uygulamasindan gelen keşif, metraj ve hakediş verilerini veritabanina aktar.</p>
             {userCanEdit ? (
               <button className="mt-4 inline-flex items-center gap-2 rounded bg-[#1f4d3a] px-3 py-2 text-sm font-semibold text-white" onClick={handleSeed} type="button">
@@ -220,15 +220,15 @@ export default function AksuTighPage() {
           <section className="mt-5 grid gap-5">
             <div className="grid gap-3 md:grid-cols-4">
               <SummaryCard label="Genel ilerleme" value={`%${formatQuantity(progress)}`} />
-              <SummaryCard label="Kesif poz sayisi" value={String(project.kesif?.length ?? 0)} />
-              <SummaryCard label="Metraj kaydi" value={String(project.metraj?.length ?? 0)} />
-              <SummaryCard label="Hakedis sayisi" value={String(project.hakedis?.length ?? 0)} />
+              <SummaryCard label="Keşif poz sayısı" value={String(project.kesif?.length ?? 0)} />
+              <SummaryCard label="Metraj kaydı" value={String(project.metraj?.length ?? 0)} />
+              <SummaryCard label="Hakediş sayısı" value={String(project.hakedis?.length ?? 0)} />
             </div>
             <InfoGrid info={project.info ?? {}} />
           </section>
         ) : null}
 
-        {activeTab === "Kesif" ? (
+        {activeTab === "Keşif" ? (
           <KesifPanel
             form={pozForm}
             rows={project.kesif ?? []}
@@ -258,11 +258,11 @@ export default function AksuTighPage() {
           />
         ) : null}
 
-        {activeTab === "Metraj Icmali" ? <MetrajIcmali rows={metrajSummary} total={metrajTotal} /> : null}
+        {activeTab === "Metraj İcmali" ? <MetrajIcmali rows={metrajSummary} total={metrajTotal} /> : null}
         {activeTab === "Raporlar" ? <ReportsPanel project={project} summary={metrajSummary} /> : null}
-        {activeTab === "Fiyat Farki" ? <FiyatFarkiPanel project={project} /> : null}
+        {activeTab === "Fiyat Farkı" ? <FiyatFarkiPanel project={project} /> : null}
         {activeTab === "Revize Fiyat" ? <RevizeFiyatPanel project={project} /> : null}
-        {activeTab === "Hakedis" ? (
+        {activeTab === "Hakediş" ? (
           <HakedisPanel
             date={hakedisDate}
             rows={project.hakedis ?? []}
@@ -331,7 +331,7 @@ function KesifPanel(props: {
       {userCanEdit ? (
         <form className="grid gap-3 rounded border border-[#d7d0c4] bg-white p-4 md:grid-cols-6" onSubmit={onSubmit}>
           <Input label="Poz No" value={form.poz_no} onChange={(value) => onFormChange({ ...form, poz_no: value })} />
-          <Input className="md:col-span-2" label="Poz Adi" value={form.ad} onChange={(value) => onFormChange({ ...form, ad: value })} />
+          <Input className="md:col-span-2" label="Poz Adı" value={form.ad} onChange={(value) => onFormChange({ ...form, ad: value })} />
           <Input label="Birim" value={form.birim} onChange={(value) => onFormChange({ ...form, birim: value })} />
           <Input label="Metraj" type="number" value={String(form.metraj ?? 0)} onChange={(value) => onFormChange({ ...form, metraj: Number(value) })} />
           <Input label="Fiyat" type="number" value={String(form.fiyat ?? 0)} onChange={(value) => onFormChange({ ...form, fiyat: Number(value) })} />
@@ -346,11 +346,11 @@ function KesifPanel(props: {
       ) : null}
       <div className="overflow-hidden rounded border border-[#d7d0c4] bg-white">
         <div className="flex items-center justify-between border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3">
-          <span className="font-semibold">Kesif</span>
+          <span className="font-semibold">Keşif</span>
           <span className="text-sm font-semibold">Toplam: {formatCurrency(total)} TL</span>
         </div>
         <ActionTable
-          headers={["Poz No", "Poz Adi", "Birim", "Metraj", "Fiyat", "Toplam"]}
+          headers={["Poz No", "Poz Adı", "Birim", "Metraj", "Fiyat", "Toplam"]}
           rows={rows.map((row) => ({
             key: String(row.id ?? row.poz_no),
             cells: [row.poz_no, row.ad, row.birim, formatQuantity(row.metraj), formatCurrency(row.fiyat), formatCurrency(row.toplam)],
@@ -369,7 +369,7 @@ function PozlarTable({ rows }: { rows: AksuPoz[] }) {
   return (
     <div className="mt-5 overflow-hidden rounded border border-[#d7d0c4] bg-white">
       <div className="border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3 font-semibold">Pozlar</div>
-      <DataTable headers={["Poz No", "Poz Adi", "Birim", "Sozlesme Metraji"]} rows={rows.map((row) => [row.poz_no, row.ad, row.birim, formatQuantity(row.metraj)])} />
+      <DataTable headers={["Poz No", "Poz Adı", "Birim", "Sözleşme Metrajı"]} rows={rows.map((row) => [row.poz_no, row.ad, row.birim, formatQuantity(row.metraj)])} />
     </div>
   );
 }
@@ -399,8 +399,8 @@ function MetrajPanel(props: {
             </select>
           </label>
           <Input label="Miktar" type="number" value={String(form.miktar ?? 0)} onChange={(value) => onFormChange({ ...form, miktar: Number(value) })} />
-          <Input label="Imalat Yeri" value={form.imalat_yeri ?? ""} onChange={(value) => onFormChange({ ...form, imalat_yeri: value })} />
-          <Input className="md:col-span-2" label="Aciklama" value={form.aciklama ?? ""} onChange={(value) => onFormChange({ ...form, aciklama: value })} />
+          <Input label="İmalat Yeri" value={form.imalat_yeri ?? ""} onChange={(value) => onFormChange({ ...form, imalat_yeri: value })} />
+          <Input className="md:col-span-2" label="Açıklama" value={form.aciklama ?? ""} onChange={(value) => onFormChange({ ...form, aciklama: value })} />
           <div className="flex items-end gap-2 md:col-span-6">
             <button className="inline-flex items-center gap-2 rounded bg-[#1f4d3a] px-3 py-2 text-sm font-semibold text-white" type="submit">
               <Plus size={16} />
@@ -411,9 +411,9 @@ function MetrajPanel(props: {
         </form>
       ) : null}
       <div className="overflow-hidden rounded border border-[#d7d0c4] bg-white">
-        <div className="border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3 font-semibold">Metraj Kayitlari</div>
+        <div className="border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3 font-semibold">Metraj Kayıtları</div>
         <ActionTable
-          headers={["Tarih", "Poz No", "Miktar", "Birim", "Tutar", "Imalat Yeri", "Aciklama"]}
+          headers={["Tarih", "Poz No", "Miktar", "Birim", "Tutar", "İmalat Yeri", "Açıklama"]}
           rows={rows.map((row) => ({
             key: String(row.id ?? `${row.tarih}-${row.poz_no}`),
             cells: [row.tarih ?? "", row.poz_no ?? "", formatQuantity(row.miktar), row.birim ?? "", formatCurrency(row.tutar), row.imalat_yeri ?? "", row.aciklama ?? ""],
@@ -432,10 +432,10 @@ function MetrajIcmali({ rows, total }: { rows: Array<{ pozNo: string; ad: string
   return (
     <div className="mt-5 overflow-hidden rounded border border-[#d7d0c4] bg-white">
       <div className="flex items-center justify-between border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3">
-        <span className="font-semibold">Metraj Icmali</span>
+        <span className="font-semibold">Metraj İcmali</span>
         <span className="text-sm font-semibold">Toplam: {formatCurrency(total)} TL</span>
       </div>
-      <DataTable headers={["Poz No", "Poz Adi", "Birim", "Toplam Miktar", "Toplam Tutar"]} rows={rows.map((row) => [row.pozNo, row.ad, row.birim, formatQuantity(row.quantity), formatCurrency(row.amount)])} />
+      <DataTable headers={["Poz No", "Poz Adı", "Birim", "Toplam Miktar", "Toplam Tutar"]} rows={rows.map((row) => [row.pozNo, row.ad, row.birim, formatQuantity(row.quantity), formatCurrency(row.amount)])} />
     </div>
   );
 }
@@ -443,9 +443,9 @@ function MetrajIcmali({ rows, total }: { rows: Array<{ pozNo: string; ad: string
 function ReportsPanel({ project, summary }: { project: AksuProject; summary: Array<{ pozNo: string; ad: string; birim: string; quantity: number; amount: number }> }) {
   return (
     <div className="mt-5 grid gap-3 md:grid-cols-3">
-      <ReportButton title="Kesif Excel" onClick={() => downloadCsv("aksu-kesif.csv", [["Poz No", "Poz Adi", "Birim", "Metraj", "Fiyat", "Toplam"], ...(project.kesif ?? []).map((row) => [row.poz_no, row.ad, row.birim, formatQuantity(row.metraj), formatCurrency(row.fiyat), formatCurrency(row.toplam)])])} />
-      <ReportButton title="Metraj Excel" onClick={() => downloadCsv("aksu-metraj.csv", [["Tarih", "Poz No", "Miktar", "Birim", "Tutar", "Imalat Yeri", "Aciklama"], ...(project.metraj ?? []).map((row) => [row.tarih ?? "", row.poz_no ?? "", formatQuantity(row.miktar), row.birim ?? "", formatCurrency(row.tutar), row.imalat_yeri ?? "", row.aciklama ?? ""])])} />
-      <ReportButton title="Metraj Icmali Excel" onClick={() => downloadCsv("aksu-metraj-icmali.csv", [["Poz No", "Poz Adi", "Birim", "Toplam Miktar", "Toplam Tutar"], ...summary.map((row) => [row.pozNo, row.ad, row.birim, formatQuantity(row.quantity), formatCurrency(row.amount)])])} />
+      <ReportButton title="Keşif Excel" onClick={() => downloadCsv("aksu-kesif.csv", [["Poz No", "Poz Adı", "Birim", "Metraj", "Fiyat", "Toplam"], ...(project.kesif ?? []).map((row) => [row.poz_no, row.ad, row.birim, formatQuantity(row.metraj), formatCurrency(row.fiyat), formatCurrency(row.toplam)])])} />
+      <ReportButton title="Metraj Excel" onClick={() => downloadCsv("aksu-metraj.csv", [["Tarih", "Poz No", "Miktar", "Birim", "Tutar", "İmalat Yeri", "Açıklama"], ...(project.metraj ?? []).map((row) => [row.tarih ?? "", row.poz_no ?? "", formatQuantity(row.miktar), row.birim ?? "", formatCurrency(row.tutar), row.imalat_yeri ?? "", row.aciklama ?? ""])])} />
+      <ReportButton title="Metraj İcmali Excel" onClick={() => downloadCsv("aksu-metraj-icmali.csv", [["Poz No", "Poz Adı", "Birim", "Toplam Miktar", "Toplam Tutar"], ...summary.map((row) => [row.pozNo, row.ad, row.birim, formatQuantity(row.quantity), formatCurrency(row.amount)])])} />
     </div>
   );
 }
@@ -466,9 +466,9 @@ function FiyatFarkiPanel({ project }: { project: AksuProject }) {
     <div className="mt-5 overflow-hidden rounded border border-[#d7d0c4] bg-white">
       <div className="flex items-center gap-2 border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3 font-semibold">
         <BarChart3 size={17} />
-        Fiyat Farki Katsayilari
+        Fiyat Farkı Katsayıları
       </div>
-      <DataTable headers={["Kod", "Katsayi", "Baz", "Aciklama"]} rows={rows.map((row) => [String(row.code ?? ""), formatQuantity(Number(row.katsayi ?? 0)), formatQuantity(Number(row.baz ?? 0)), String(row.aciklama ?? "")])} />
+      <DataTable headers={["Kod", "Katsayı", "Baz", "Açıklama"]} rows={rows.map((row) => [String(row.code ?? ""), formatQuantity(Number(row.katsayi ?? 0)), formatQuantity(Number(row.baz ?? 0)), String(row.aciklama ?? "")])} />
     </div>
   );
 }
@@ -478,7 +478,7 @@ function RevizeFiyatPanel({ project }: { project: AksuProject }) {
   return (
     <div className="mt-5 overflow-hidden rounded border border-[#d7d0c4] bg-white">
       <div className="border-b border-[#d7d0c4] bg-[#eef0ec] px-4 py-3 font-semibold">Revize Fiyat Kontrolu</div>
-      <DataTable headers={["Poz No", "Poz Adi", "Sozlesme", "Toplam Imalat", "%20 Sinir", "Revize Miktar", "Revize Fiyat"]} rows={rows.map((row) => [row.pozNo, row.ad, formatQuantity(row.contractQty), formatQuantity(row.totalQty), formatQuantity(row.normalLimit), formatQuantity(row.revisedQty), formatCurrency(row.revisedPrice)])} />
+      <DataTable headers={["Poz No", "Poz Adı", "Sözleşme", "Toplam İmalat", "%20 Sınır", "Revize Miktar", "Revize Fiyat"]} rows={rows.map((row) => [row.pozNo, row.ad, formatQuantity(row.contractQty), formatQuantity(row.totalQty), formatQuantity(row.normalLimit), formatQuantity(row.revisedQty), formatCurrency(row.revisedPrice)])} />
     </div>
   );
 }
@@ -536,7 +536,7 @@ function ActionTable<T>({ headers, rows, userCanEdit, onDelete, onEdit }: { head
         <thead>
           <tr className="bg-[#f8f6f1] text-left">
             {headers.map((header) => <th className="border-b border-[#d7d0c4] px-3 py-2" key={header}>{header}</th>)}
-            {userCanEdit ? <th className="w-28 border-b border-[#d7d0c4] px-3 py-2">Islem</th> : null}
+            {userCanEdit ? <th className="w-28 border-b border-[#d7d0c4] px-3 py-2">??lem</th> : null}
           </tr>
         </thead>
         <tbody>
@@ -546,7 +546,7 @@ function ActionTable<T>({ headers, rows, userCanEdit, onDelete, onEdit }: { head
               {userCanEdit ? (
                 <td className="border-b border-[#eee8dc] px-3 py-2">
                   <div className="flex gap-2">
-                    {onEdit ? <IconButton label="Duzenle" onClick={() => onEdit(row.item)} icon={<Pencil size={15} />} /> : null}
+                    {onEdit ? <IconButton label="Düzenle" onClick={() => onEdit(row.item)} icon={<Pencil size={15} />} /> : null}
                     {onDelete ? <IconButton label="Sil" onClick={() => onDelete(row.item)} icon={<Trash2 size={15} />} danger /> : null}
                   </div>
                 </td>
@@ -554,7 +554,7 @@ function ActionTable<T>({ headers, rows, userCanEdit, onDelete, onEdit }: { head
             </tr>
           )) : (
             <tr>
-              <td className="px-3 py-8 text-center text-[#61706b]" colSpan={headers.length + (userCanEdit ? 1 : 0)}>Kayit yok.</td>
+              <td className="px-3 py-8 text-center text-[#61706b]" colSpan={headers.length + (userCanEdit ? 1 : 0)}>Kayıt yok.</td>
             </tr>
           )}
         </tbody>
@@ -587,7 +587,7 @@ function DataTable({ headers, rows }: { headers: string[]; rows: string[][] }) {
             </tr>
           )) : (
             <tr>
-              <td className="px-3 py-8 text-center text-[#61706b]" colSpan={headers.length}>Kayit yok.</td>
+              <td className="px-3 py-8 text-center text-[#61706b]" colSpan={headers.length}>Kayıt yok.</td>
             </tr>
           )}
         </tbody>
