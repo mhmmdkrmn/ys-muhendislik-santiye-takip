@@ -1,6 +1,7 @@
 import aksuData from "@/data/aksu-santiye-verileri.json";
 
-type AksuPoz = {
+export type AksuPoz = {
+  id?: string | number;
   poz_no: string;
   ad: string;
   birim: string;
@@ -9,7 +10,7 @@ type AksuPoz = {
   toplam: number;
 };
 
-type AksuMetraj = {
+export type AksuMetraj = {
   id?: number | string;
   tarih?: string;
   poz_no?: string;
@@ -18,17 +19,45 @@ type AksuMetraj = {
   tutar?: number;
   imalat_yeri?: string;
   aciklama?: string;
+  hakedis_no?: string | number;
 };
 
-type AksuHakedis = {
+export type AksuHakedisRow = {
+  poz_no?: string;
+  asil_poz_no?: string;
+  revize_satir?: boolean;
+  aciklama?: string;
+  birim?: string;
+  imalat_yeri?: string;
+  birim_fiyat?: number;
+  fiili_toplam_miktar?: number;
+  toplam_miktar?: number;
+  onceki_miktar?: number;
+  bu_miktar?: number;
+  toplam_tutar?: number;
+  onceki_tutar?: number;
+  bu_tutar?: number;
+};
+
+export type AksuHakedis = {
+  id?: string | number;
   no?: number | string;
   tarih?: string;
   kesin?: boolean;
+  onceki_no?: string | number;
+  metraj_ids?: Array<string | number>;
+  rows?: AksuHakedisRow[];
+  toplam_sozlesme_tutari?: number;
+  onceki_sozlesme_tutari?: number;
+  sozlesme_tutari?: number;
+  fiyat_farki?: number;
+  fiyat_farki_detay?: Array<Record<string, string | number>>;
+  fiyat_farki_hata?: string;
   toplam_bu_hakedis?: number;
   tahakkuk_kdv_dahil?: number;
 };
 
-type AksuProject = {
+export type AksuProject = {
   id: number;
   name: string;
   info?: Record<string, string>;
@@ -43,7 +72,7 @@ type AksuProject = {
 
 const project = (aksuData as { projects: AksuProject[] }).projects[0];
 
-function repairText(value: string) {
+export function repairText(value: string) {
   try {
     const bytes = Uint8Array.from(value, (char) => char.charCodeAt(0));
     return new TextDecoder("utf-8").decode(bytes);
@@ -52,7 +81,7 @@ function repairText(value: string) {
   }
 }
 
-function repairProjectText(projectData: AksuProject): AksuProject {
+export function repairProjectText(projectData: AksuProject): AksuProject {
   return {
     ...projectData,
     name: repairText(projectData.name),

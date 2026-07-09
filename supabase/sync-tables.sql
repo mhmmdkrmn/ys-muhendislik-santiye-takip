@@ -142,3 +142,93 @@ values
   ('Ayrim yapisi'),
   ('Hat kapama vanasi')
 on conflict (name) do nothing;
+
+create table if not exists public.aksu_pozlar (
+  id uuid primary key default gen_random_uuid(),
+  poz_no text not null unique,
+  ad text not null,
+  birim text not null,
+  metraj numeric not null default 0,
+  fiyat numeric not null default 0,
+  toplam numeric not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.aksu_metraj (
+  id uuid primary key default gen_random_uuid(),
+  tarih date not null,
+  poz_no text not null references public.aksu_pozlar(poz_no) on update cascade on delete restrict,
+  miktar numeric not null default 0,
+  birim text,
+  tutar numeric not null default 0,
+  imalat_yeri text,
+  aciklama text,
+  hakedis_no text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.aksu_hakedis (
+  id uuid primary key default gen_random_uuid(),
+  no integer not null unique,
+  tarih date not null,
+  kesin boolean not null default false,
+  onceki_no text,
+  metraj_ids jsonb not null default '[]'::jsonb,
+  rows jsonb not null default '[]'::jsonb,
+  toplam_sozlesme_tutari numeric not null default 0,
+  onceki_sozlesme_tutari numeric not null default 0,
+  sozlesme_tutari numeric not null default 0,
+  fiyat_farki numeric not null default 0,
+  fiyat_farki_detay jsonb not null default '[]'::jsonb,
+  fiyat_farki_hata text,
+  toplam_bu_hakedis numeric not null default 0,
+  tahakkuk_kdv_dahil numeric not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.aksu_pozlar enable row level security;
+alter table public.aksu_metraj enable row level security;
+alter table public.aksu_hakedis enable row level security;
+
+drop policy if exists "authenticated read aksu pozlar" on public.aksu_pozlar;
+drop policy if exists "admin write aksu pozlar" on public.aksu_pozlar;
+drop policy if exists "authenticated read aksu metraj" on public.aksu_metraj;
+drop policy if exists "admin write aksu metraj" on public.aksu_metraj;
+drop policy if exists "authenticated read aksu hakedis" on public.aksu_hakedis;
+drop policy if exists "admin write aksu hakedis" on public.aksu_hakedis;
+
+create policy "authenticated read aksu pozlar"
+on public.aksu_pozlar for select
+to authenticated
+using (true);
+
+create policy "admin write aksu pozlar"
+on public.aksu_pozlar for all
+to authenticated
+using (public.current_user_role() = 'admin')
+with check (public.current_user_role() = 'admin');
+
+create policy "authenticated read aksu metraj"
+on public.aksu_metraj for select
+to authenticated
+using (true);
+
+create policy "admin write aksu metraj"
+on public.aksu_metraj for all
+to authenticated
+using (public.current_user_role() = 'admin')
+with check (public.current_user_role() = 'admin');
+
+create policy "authenticated read aksu hakedis"
+on public.aksu_hakedis for select
+to authenticated
+using (true);
+
+create policy "admin write aksu hakedis"
+on public.aksu_hakedis for all
+to authenticated
+using (public.current_user_role() = 'admin')
+with check (public.current_user_role() = 'admin');
